@@ -1,18 +1,22 @@
 #!/bin/bash
-echo 'starting build...'
-echo 'cleanup'
-rm -f generator.jar
+# ensure that JAVA_HOME environment variable is set in order to execute the build commands.
+echo '...starting build'
+
+echo '...cleanup'
 rm -rf target
 rm -rf data
 mkdir target
 mkdir data
-echo 'compiling'
-$JAVA_HOME/bin/javac -Xlint:unchecked -d target -sourcepath src/inspectorCraigJava/*.java src/inspectorCraigJava/dmackinnon1/craig/*.java
-#cd src/inspectorCraigJava
 
-echo 'generating jar'
+echo '...compiling sources from src/inspectorCraigJava to target directory'
+$JAVA_HOME/bin/javac -Xlint:unchecked -d target -sourcepath src/inspectorCraigJava/*.java src/inspectorCraigJava/dmackinnon1/craig/*.java
+
+echo '...creating generator.jar in target directory'
 cd target
 $JAVA_HOME/bin/jar cfe ../target/generator.jar dmackinnon1.craig.PuzzleWriter dmackinnon1
 cd ..
-echo 'executing'
+
+echo '...executing jar to generate puzzle data in data directory'
 $JAVA_HOME/bin/java -jar target/generator.jar
+
+echo '...complete - check output in data directory'
