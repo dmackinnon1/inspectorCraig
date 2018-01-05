@@ -35,6 +35,7 @@ public class PuzzleWriter {
             } else {
                 s.add("\t" + p.toJson());
             }
+            count ++;
         }
         s.add("]");
         return s;

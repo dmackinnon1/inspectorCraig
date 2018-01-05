@@ -11,7 +11,9 @@ import java.util.HashSet;
 public class Scratchpad {
 
     public static void main(String args[]){
-        good4Problems();
+
+        System.out.println(PuzzleWriter.threePhrasesProblems());
+
     }
 
     public static void good4Problems(){

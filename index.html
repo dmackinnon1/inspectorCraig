@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Inspector Craig</title>
+</head>
+<style>
+
+ul {
+    padding-left: 40px;
+    list-style-type: none;
+}
+
+li {
+    padding-bottom: 10px;
+}
+table, tr {
+    padding: 4px;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse; 
+    margin: auto;
+}
+th, td {
+    padding: 10px;
+}
+.buttonDiv {
+    display: inline-block;
+    padding: 2px;
+    border: 2px;
+}
+.centered {
+    text-align: center;
+}
+.puzzle-text {
+    font-style: italic;
+    font-size: large;
+}
+</style>
+<script>
+let craig3Data = [];
+let puzzle = null;
+//load data
+$(document).ready(function(){
+	console.log("about to fetch remote data");
+	$.getJSON("data/craig3.json", function(data){
+		craig3Data = data;
+	});
+});
+//initialize display
+$(document).ready(function(){
+	$("#resetButton").on("click", function(){
+		reset();
+	});
+});
+
+function reset() {
+	puzzle = randomElement(craig3Data);
+	console.log(craig3Data);
+	console.log(puzzle)
+};
+
+/**
+* Randomization Utilities
+*/
+
+function randomInt(lessThan){
+	return Math.floor(Math.random()*lessThan);
+};
+
+function randomRange(greaterThan, lessThan){
+	var shifted = randomInt(lessThan - greaterThan + 1);
+	return lessThan - shifted; 
+};
+
+function randomElement(array) {
+	var res =randomRange(0, array.length-1);
+	return array[res];
+};
+
+</script>
+
+<body>
+
+<nav class="navbar navbar-default" style="margin-bottom:0px">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="..">
+				<img src="imgs/github_badge1.png" style="max-width:100%;max-height:100%" >
+			</a>
+			<p class="navbar-text navbar-right">
+				<a href=".." class="navbar-link">dmackinnon1.github.io</a>
+			</p>
+		</div>
+		</div>
+</nav>
+
+<div class="container-fluid">
+	<div class='row'>
+	<div class='col-sm-1'></div>
+	<div class='col-sm-10'>
+	<div class="page-header">
+		<h1>The Case Files of Inspector Craig</h1>
+	</div> 		
+
+	<p>
+	Inspector Craig general text goes here. 
+	</p>
+	<br>
+	<hr>
+	<div class="centered">
+		<div class="btn-group btn-group-md " role="group"> 
+  			<button type="button" id="1" class="puzzleTypeBtn btn btn-primary">Folder 1</button>
+  			<button type="button" id="2" class="puzzleTypeBtn btn btn-secondary">Folder 2</button>
+ 		</div>
+	</div>
+	<hr>
+	<div id="versionDescription"></div>
+	<br>
+	<div id="puzzleDescription" class='puzzle-text centered'></div>	
+	<hr>
+	<div id="caskDisplay" class="centered" style="text-align=center"></div>
+	<br>
+	<div id="solutionDisplay" class="puzzle-text centered"></div>	
+	<hr>
+	<div id="resetButtonHolder">
+		<button type="button" id="resetButton", class="btn btn-secondary typeButton">New Puzzle</span></button>
+	</div>
+	<br>
+	<br>
+
+</div>
+	<div class='col-sm-1'></div>
+</div>
+
+</div>
+</body>
+</html>
