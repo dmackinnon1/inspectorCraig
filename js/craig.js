@@ -40,8 +40,9 @@ function puzzleReset() {
 	if (craig.activeSet.length == 0) {
 		craig.activeSet = craig.puzzles;
 	}
-	craig.selected = new PuzzleController(randomElement(craig.activeSet));
-	craig.activeSet = removeElement(craig.selected);
+	let p = randomElement(craig.activeSet);
+	craig.selected = new PuzzleController(p);
+	craig.activeSet = removeElement(craig.activeSet,p);
 	formatPuzzle(craig.selected);	
 	craig.answered = false;
 	display.disabled = false;
