@@ -6,7 +6,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/craig-util.js"></script>
+<script src="js/craig-parse.js"></script>
 <script src="js/craig.js"></script>
+<script type="text/javascript" async	
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 <title>Inspector Craig</title>
 </head>
 <style>
@@ -15,7 +20,6 @@ ul {
     padding-left: 40px;
     list-style-type: none;
 }
-
 li {
     padding-bottom: 10px;
 }
@@ -68,11 +72,13 @@ $(document).ready(function(){
 	display.puzzleDescription = document.getElementById("puzzleDescription");
 	display.suspectDisplay = document.getElementById("suspectDisplay");
 	display.puzzleTitle = document.getElementById("puzzleTitle");
+	display.latexDisplay = document.getElementById("latexDisplay");
 });
 
 function reset() {
 	craig.puzzles = craig3Data;	
 	puzzleReset();
+	MathJax.Hub.Typeset();
 };
 
 
@@ -102,13 +108,13 @@ function reset() {
 	</div> 		
 
 	<p class='puzzle-text'>
-	Raymond Smullyan's book of logic puzzles "What is the Name of this Book?" introduced the detective Inspector Leslie Craig of Scotland Yard. On this page, Inspector Craig has provided some 
-	additional casefiles "for the benifit of those interested in the application of logic to the
+	Raymond Smullyan's book of puzzles "What is the Name of this Book?" introduced the logical detective Inspector Leslie Craig of Scotland Yard. On this page, Inspector Craig has provided some 
+	additional case files "for the benifit of those interested in the application of logic to the
 	solution of crimes."   
 	</p>
 	<p class='puzzle-text'>
 	In each case history, the suspects can be deduced to be guilty or innocent, or it may happen that
-	the evidence is not clear either way, and their guilt or innocense is uncertain.
+	the evidence is not clear and their guilt or innocence remains uncertain.
 	</p>
 	<hr>
 	<!--
@@ -124,6 +130,10 @@ function reset() {
 	<h2 id="puzzleTitle"></h2>
 	<div id="puzzleIntro" class='puzzle-text'></div>	
 	<div id="puzzleDescription" class='puzzle-text'></div>	
+	<button type='button' class='btn btn-info' data-toggle='collapse' data-target='#latexDisplay'>
+	Show Propositions </button>
+	<div id='latexDisplay' class='collapse'>
+	</div>
 	<hr>
 	<div id="suspectDisplay"></div>
 	<br>
