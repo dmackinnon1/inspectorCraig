@@ -56,8 +56,9 @@ public class Generator {
 
      */
     public List<Problem> generate71() {
-        String description = "Based on problem 71, WITNOTB";
+        String description = "710";
         List<Problem> problems = new ArrayList<Problem>();
+        int counter = 1;
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
             remain.addAll(this.props);
@@ -79,7 +80,8 @@ public class Generator {
                             .addSatisfier(pq)
                             .addSatisfier(ripq);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -96,7 +98,8 @@ public class Generator {
      */
 
     public List<Problem> generate71v2() {
-        String description = "Modification of problem 71, WITNOTB";
+        String description = "711";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -121,7 +124,8 @@ public class Generator {
                             .addSatisfier(ripq)
                             .addSatisfier(qinr);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -140,7 +144,8 @@ public class Generator {
      */
 
     public List<Problem> generate71v3() {
-        String description = "Modification of problem 71, WITNOTB";
+        String description = "712";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -167,7 +172,8 @@ public class Generator {
                             .addSatisfier(qinr)
                             .addSatisfier(pir);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -180,7 +186,8 @@ public class Generator {
         result: r, -q
      */
     public List<Problem> generate72() {
-        String description = "Based on problem 72, WITNOTB";
+        String description = "720";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -199,7 +206,8 @@ public class Generator {
                             .addPhrase(q.negate())
                             .addSatisfier(piu);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -213,7 +221,8 @@ public class Generator {
       results: -q, -p, r
    */
     public List<Problem> generate72v2() {
-        String description = "Modification of problem 72, WITNOTB";
+        String description = "721";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -225,7 +234,6 @@ public class Generator {
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-
                     Union u = new Union(remain.toArray(new Phrase[remain.size()]));
                     Implication piu = new Implication(p, u);
                     Implication rinp = new Implication(r, p.negate());
@@ -234,7 +242,8 @@ public class Generator {
                             .addSatisfier(piu)
                             .addSatisfier(rinp);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -248,7 +257,8 @@ public class Generator {
      results: -q, p, r
   */
     public List<Problem> generate72v3() {
-        String description = "Modification of problem 72, WITNOTB";
+        String description = "722";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -260,7 +270,6 @@ public class Generator {
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-
                     Union u = new Union(remain.toArray(new Phrase[remain.size()]));
                     Implication piu = new Implication(p, u);
                     Implication rip = new Implication(r, p);
@@ -269,7 +278,8 @@ public class Generator {
                             .addSatisfier(piu)
                             .addSatisfier(rip);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter++;
                 }
             }
         }
@@ -285,7 +295,8 @@ public class Generator {
     result: q, -p, -r
      */
     public List<Problem> generate73() {
-        String description = "Based on problem 73, WITNOTB";
+        String description = "730";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -309,13 +320,13 @@ public class Generator {
                             .addSatisfier(pinr)
                             .addSatisfier(qinpnr);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter++;
                 }
             }
         }
         return problems;
     }
-
 
     /*
    p|q|r
@@ -326,7 +337,8 @@ public class Generator {
    result: q, -p
     */
     public List<Problem> generate73v2() {
-        String description = "Modification of problem 73, WITNOTB";
+        String description = "731";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -350,7 +362,8 @@ public class Generator {
                             .addSatisfier(pinr)
                             .addSatisfier(qinp);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -365,7 +378,8 @@ public class Generator {
      result: q, -p, r
       */
     public List<Problem> generate73v3() {
-        String description = "Modification of problem 73, WITNOTB";
+        String description = "732";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -389,7 +403,8 @@ public class Generator {
                             .addSatisfier(pinr)
                             .addSatisfier(qir);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -405,7 +420,8 @@ public class Generator {
     result: q, p, -r
      */
     public List<Problem> generate73v4() {
-        String description = "Modification of problem 73, WITNOTB";
+        String description = "733";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -429,7 +445,8 @@ public class Generator {
                             .addSatisfier(pinr)
                             .addSatisfier(qip);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -445,7 +462,8 @@ public class Generator {
      */
 
     public List<Problem> generate74() {
-        String description = "Based on problem 74, WITNOTB";
+        String description = "740";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -472,7 +490,8 @@ public class Generator {
                             .addSatisfier(pinr)
                             .addSatisfier(riu);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -488,7 +507,8 @@ public class Generator {
      */
 
     public List<Problem> generate74v2() {
-        String description = "Modification of problem 74, WITNOTB";
+        String description = "741";
+        int counter = 0;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -516,7 +536,8 @@ public class Generator {
                             .addSatisfier(riu)
                             .addSatisfier(new Implication(q,p));
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter++;
                 }
             }
         }
@@ -530,7 +551,8 @@ public class Generator {
 result: p, by contradiction
  */
     public List<Problem> generate78() {
-        String description = "Based on problem 78, WITNOTB";
+        String description = "780";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -556,7 +578,8 @@ result: p, by contradiction
                             .addSatisfier(npqir)
                             .addSatisfier(npnr);
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter ++;
                 }
             }
         }
@@ -571,7 +594,8 @@ result: p, by contradiction
 result: p, by contradiction, q and r
  */
     public List<Problem> generate78v2() {
-        String description = "Modification of problem 78, WITNOTB";
+        String description = "781";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -598,13 +622,13 @@ result: p, by contradiction, q and r
                             .addSatisfier(npnr)
                             .addSatisfier(new Implication(p,q));
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter++;
                 }
             }
         }
         return problems;
     }
-
 
     /*
 p|q|r
@@ -614,7 +638,8 @@ p-> -q
 result: p, by contradiction, -q
 */
     public List<Problem> generate78v3() {
-        String description = "Modification of problem 78, WITNOTB";
+        String description = "782";
+        int counter = 1;
         List<Problem> problems = new ArrayList<Problem>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
@@ -641,7 +666,8 @@ result: p, by contradiction, -q
                             .addSatisfier(npnr)
                             .addSatisfier(new Implication(p,q.negate()));
                     problems.add(new Problem(this.props, s).solve()
-                            .description(description));
+                            .description(description + counter));
+                    counter++;
                 }
             }
         }

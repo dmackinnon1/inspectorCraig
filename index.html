@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/craig.js"></script>
 <title>Inspector Craig</title>
 </head>
 <style>
@@ -37,7 +38,6 @@ th, td {
     text-align: center;
 }
 .puzzle-text {
-    font-style: italic;
     font-size: large;
 }
 </style>
@@ -49,6 +49,8 @@ $(document).ready(function(){
 	console.log("about to fetch remote data");
 	$.getJSON("data/craig3.json", function(data){
 		craig3Data = data;
+	}).done(function() {
+		reset();
 	});
 });
 //initialize display
@@ -56,31 +58,23 @@ $(document).ready(function(){
 	$("#resetButton").on("click", function(){
 		reset();
 	});
+	$("#solve").on("click", function(event){
+			if (display.disabled) return;
+			$("#reset").addClass("btn-success");
+			solvePuzzle();
+	});
+	display.puzzleIntro = document.getElementById("puzzleIntro");
+	display.solutionDisplay  = document.getElementById("solutionDisplay");
+	display.puzzleDescription = document.getElementById("puzzleDescription");
+	display.suspectDisplay = document.getElementById("suspectDisplay");
+	display.puzzleTitle = document.getElementById("puzzleTitle");
 });
 
 function reset() {
-	puzzle = randomElement(craig3Data);
-	console.log(craig3Data);
-	console.log(puzzle)
+	craig.puzzles = craig3Data;	
+	puzzleReset();
 };
 
-/**
-* Randomization Utilities
-*/
-
-function randomInt(lessThan){
-	return Math.floor(Math.random()*lessThan);
-};
-
-function randomRange(greaterThan, lessThan){
-	var shifted = randomInt(lessThan - greaterThan + 1);
-	return lessThan - shifted; 
-};
-
-function randomElement(array) {
-	var res =randomRange(0, array.length-1);
-	return array[res];
-};
 
 </script>
 
@@ -107,32 +101,43 @@ function randomElement(array) {
 		<h1>The Case Files of Inspector Craig</h1>
 	</div> 		
 
-	<p>
-	Inspector Craig general text goes here. 
+	<p class='puzzle-text'>
+	Raymond Smullyan's book of logic puzzles "What is the Name of this Book?" introduced the detective Inspector Leslie Craig of Scotland Yard. On this page, Inspector Craig has provided some 
+	additional casefiles "for the benifit of those interested in the application of logic to the
+	solution of crimes."   
 	</p>
-	<br>
+	<p class='puzzle-text'>
+	In each case history, the suspects can be deduced to be guilty or innocent, or it may happen that
+	the evidence is not clear either way, and their guilt or innocense is uncertain.
+	</p>
 	<hr>
+	<!--
 	<div class="centered">
 		<div class="btn-group btn-group-md " role="group"> 
   			<button type="button" id="1" class="puzzleTypeBtn btn btn-primary">Folder 1</button>
   			<button type="button" id="2" class="puzzleTypeBtn btn btn-secondary">Folder 2</button>
  		</div>
 	</div>
+	
 	<hr>
-	<div id="versionDescription"></div>
-	<br>
-	<div id="puzzleDescription" class='puzzle-text centered'></div>	
+	-->
+	<h2 id="puzzleTitle"></h2>
+	<div id="puzzleIntro" class='puzzle-text'></div>	
+	<div id="puzzleDescription" class='puzzle-text'></div>	
 	<hr>
-	<div id="caskDisplay" class="centered" style="text-align=center"></div>
+	<div id="suspectDisplay"></div>
 	<br>
-	<div id="solutionDisplay" class="puzzle-text centered"></div>	
+	<div id="soveButton">
+		<button type="button" id="solve" class="btn btn-secondary typeButton">Solve</span></button>
+	</div>
+	<br>
+	<div id="solutionDisplay" class="puzzle-text"></div>	
 	<hr>
 	<div id="resetButtonHolder">
 		<button type="button" id="resetButton", class="btn btn-secondary typeButton">New Puzzle</span></button>
 	</div>
 	<br>
 	<br>
-
 </div>
 	<div class='col-sm-1'></div>
 </div>
