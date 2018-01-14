@@ -41,8 +41,8 @@ th, td {
 .centered {
     text-align: center;
 }
-.puzzle-text {
-    font-size: large;
+.prop-column {
+	font-size:large;
 }
 </style>
 <script>
@@ -109,12 +109,11 @@ function reset() {
 
 	<p class='puzzle-text'>
 	Raymond Smullyan's book of puzzles "What is the Name of this Book?" introduced the logical detective Inspector Leslie Craig of Scotland Yard. On this page, Inspector Craig has provided some 
-	additional case files "for the benifit of those interested in the application of logic to the
+	additional case files "for the benefit of those interested in the application of logic to the
 	solution of crimes."   
 	</p>
 	<p class='puzzle-text'>
-	In each case history, the suspects can be deduced to be guilty or innocent, or it may happen that
-	the evidence is not clear and their guilt or innocence remains uncertain.
+	For each case history, determine if the evidence supports the guilt or innocence of each suspect, or that the evidence does not allow a determination.
 	</p>
 	<hr>
 	<!--
@@ -130,9 +129,13 @@ function reset() {
 	<h2 id="puzzleTitle"></h2>
 	<div id="puzzleIntro" class='puzzle-text'></div>	
 	<div id="puzzleDescription" class='puzzle-text'></div>	
-	<button type='button' class='btn btn-info' data-toggle='collapse' data-target='#latexDisplay'>
+	<button type='button' class='btn btn-info' data-toggle='collapse' data-target='#latexDisplayHolder'>
 	Show Propositions </button>
-	<div id='latexDisplay' class='collapse'>
+	<div id='latexDisplayHolder' class='collapse'>
+		<br>
+		<p><em>The statements of evidence can be translated into logical formulae - if you are familiar with
+		the notation, this might help you solve the case.</em></p>
+		<div id='latexDisplay'></div>
 	</div>
 	<hr>
 	<div id="suspectDisplay"></div>

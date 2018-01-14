@@ -53,19 +53,20 @@ function puzzleReset() {
 
 let intros = [
 	"An enormous amount of loot had been stolen from a store. ",
-	"A robbery occured in London. ",
+	"A robbery occurred in London. ",
 	"Mr McGreggor, a London shopkeeper, called Scotland Yard to report a robbery. ",
 	"A daring jewel heist occurred in broad daylight. ",
 	"Scotland Yard has been summoned to investigate a break-in at an art gallery. ",
 	"Inspector Craig was called in to investigate a mysterious break in at a manor house. ",
 	"A bank in London's financial district was robbed. ",
-	"A shopowner found her safe broken into when arriving to work one morning. ",
+	"A shop owner found her safe broken into when arriving to work one morning. ",
 	"Funds raised for a charity were found to be stolen. ",
-	"A string of break-ins were reported in a London neighborhoud. ",
+	"A string of break-ins were reported in a London neighborhood. ",
 	"Luxury cars have been stolen from several dealers in the same area. ",
 	"Shipments of expensive items have been going 'missing' from the docs. ",
-	"Several thefts had been brught to Inspector Craig's attention. ",
-	"A case of a suspected car theft ring was being investigated. "
+	"Several thefts had been brought to Inspector Craig's attention. ",
+	"A case of a suspected car theft ring was being investigated. ",
+	"A gang of thieves had been harassing neighborhood merchants. "
 ];
 
 /*
@@ -111,20 +112,20 @@ class PuzzleController {
 	}
 
 	cluesDisplay() {
-		let c = "<br><ul>";
+		let c = "<ul><br>";
 		for (var i in this.clues){
 			c += "<li>" + completeSentence(this.clues[i].description()) + "</li>";			
 		}
-		c+="<ul><br>";
+		c+="<ul>";
 		return c;
 	}
 
 	cluesLatex() {
-		let c = "<br><ul>";
+		let c = "<ul>";
 		for (var i in this.clues){
 			c += "<li> \\(" +this.clues[i].latex() + "\\)</li>";			
 		}
-		c+="<ul><br>";
+		c+="<ul>";
 		return c;
 	}
 
@@ -214,7 +215,7 @@ class SuspectController {
 	}
 	display() {
 		var txt = "glyphicon glyphicon-unchecked";
-		var btn = "<tr><td><span class='puzzle-text'>" + this.suspect + "</span></td>";
+		var btn = "<tr><td><span class='prop-column'>" + this.suspect + "</span></td>";
 		btn +=  "<td><button type='button' id='g_"+ this.suspect + "' class='btn btn-secondary', onclick='selectGuilty(event)'>";
 		btn += "<span class='glypicon " + txt + " lrg-font'></span>"
 		btn += "</button></td>";
