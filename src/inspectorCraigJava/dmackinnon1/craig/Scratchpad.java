@@ -1,9 +1,6 @@
 package dmackinnon1.craig;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
 
 /**
  * Just a class to try stuff out.
@@ -17,7 +14,7 @@ public class Scratchpad {
     }
 
     public static void good4Problems(){
-        Generator g = new Generator(4);
+        Series7Generator g = new Series7Generator(4);
         int inconsistentCount = 0;
         int maxProblemSize = 0;
         int minProblemSize = 100;
@@ -51,21 +48,21 @@ public class Scratchpad {
     }
 
     public static void random3Problem(){
-        Generator g = new Generator(3);
+        Series7Generator g = new Series7Generator(3);
         Problem p = g.randomProblem();
         System.out.println(p.toJson());
         System.out.println(p.isConsistent());
     }
 
     public static void random2Problem(){
-        Generator g = new Generator(2);
+        Series7Generator g = new Series7Generator(2);
         Problem p = g.randomProblem();
         System.out.println(p.toJson());
         System.out.println(p.isConsistent());
     }
     public static void all3series(){
-        Generator g = new Generator(3);
-        List<Problem> ps = g.all3Series();
+        Series7Generator g = new Series7Generator(3);
+        List<Problem> ps = g.generateAll();
         System.out.println("[");
         boolean first = true;
         for (Problem p: ps){
@@ -84,7 +81,7 @@ public class Scratchpad {
 
     //requires contradiction checking
     public static void problem78(){
-        Generator g = new Generator(3);
+        Series7Generator g = new Series7Generator(3);
         List<Problem> ps = g.generate78();
         for (Problem p: ps){
             System.out.println(p.toJson());
@@ -93,7 +90,7 @@ public class Scratchpad {
 
     //requires contradiction checking
     public static void problem78v2(){
-        Generator g = new Generator(3);
+        Series7Generator g = new Series7Generator(3);
         List<Problem> ps = g.generate78v2();
         for (Problem p: ps){
             System.out.println(p.toJson());
@@ -101,7 +98,7 @@ public class Scratchpad {
     }
     //requires contradiction checking
     public static void problem78v3(){
-        Generator g = new Generator(3);
+        Series7Generator g = new Series7Generator(3);
         List<Problem> ps = g.generate78v3();
         for (Problem p: ps){
             System.out.println(p.toJson());

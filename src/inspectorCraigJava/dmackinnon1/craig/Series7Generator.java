@@ -2,33 +2,19 @@ package dmackinnon1.craig;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Generates logic problems with structure based on those found in chapter 6 of
  * "What is the Name of this Book?" by Raymond Smullyan.
  */
 
-public class Generator {
+public class Series7Generator extends BaseGenerator {
 
-    protected static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    protected List<Proposition> props = new ArrayList<Proposition>();
-
-    protected static Random rnd = new Random();
-
-    public Generator(int propSize) {
-        if (propSize > alphabet.length())
-            throw new RuntimeException("Number of propositions cannot exceed " + alphabet.length());
-        for (int i = 0; i< propSize; i++){
-            props.add(new Proposition("" + alphabet.charAt(i)));
-        }
+    public Series7Generator(int propSize) {
+        super(propSize);
     }
 
-    protected Union totalUnion(){
-        return new Union(this.props.toArray(new Proposition[this.props.size()]));
-    }
-
-    public List<Problem> all3Series(){
+    public List<Problem> generateAll(){
         List<Problem> problems = generate71();
         problems.addAll(generate71v2());
         problems.addAll(generate71v3());
@@ -672,24 +658,6 @@ result: p, by contradiction, -q
             }
         }
         return problems;
-    }
-
-    public Problem improve(Problem p){
-        while(p.shouldImprove() && p.isConsistent()){
-            p.improve();
-        }
-        return p;
-    }
-
-    public Problem randomProblem(){
-        Solver s = new Solver().propositions(this.props);
-        s.addSatisfier(this.totalUnion());
-        Problem p = new Problem(this.props, s);
-
-        while(p.shouldImprove() && p.isConsistent()){
-            p.improve();
-        }
-        return p;
     }
 
 }

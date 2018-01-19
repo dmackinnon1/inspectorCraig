@@ -16,6 +16,9 @@ display.suspectDisplay = null;
 display.disabled = false;
 display.solutionDisplay = null;
 
+function resetPuzzleFolder() {
+	craig.activeSet = craig.puzzles;
+}
 //--- functions for displaying puzzle elements ----
 function formatPuzzle(pc) {
 	let pi = display.puzzleIntro;
