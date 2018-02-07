@@ -1,5 +1,10 @@
 package dmackinnon1.craig;
 
+import dmackinnon1.logic.Problem;
+import dmackinnon1.logic.Proposition;
+import dmackinnon1.logic.Solver;
+import dmackinnon1.logic.Union;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -7,7 +12,7 @@ import java.util.Random;
 public class BaseGenerator {
     protected static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     protected static Random rnd = new Random();
-    protected List<Proposition> props = new ArrayList<Proposition>();
+    public List<Proposition> props = new ArrayList<Proposition>();
 
     public BaseGenerator (int propSize) {
         if (propSize > alphabet.length())

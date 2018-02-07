@@ -1,4 +1,9 @@
-package dmackinnon1.craig;
+package dmackinnon1.puzzles;
+import dmackinnon1.craig.BaseGenerator;
+import dmackinnon1.logic.Problem;
+import dmackinnon1.craig.Series1Generator;
+import dmackinnon1.craig.Series7Generator;
+
 import java.util.List;
 import java.nio.file.Path;
 import java.nio.file.Paths;

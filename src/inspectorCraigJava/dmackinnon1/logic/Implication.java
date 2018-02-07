@@ -1,4 +1,4 @@
-package dmackinnon1.craig;
+package dmackinnon1.logic;
 import java.util.Collection;
 
 /**

@@ -1,4 +1,4 @@
-package dmackinnon1.craig;
+package dmackinnon1.logic;
 
 import java.util.Collection;
 /**
@@ -7,7 +7,7 @@ import java.util.Collection;
  * A proposition can be negated.
  */
 
-public class Proposition implements Phrase, Util {
+public class Proposition implements Phrase {
     protected String symbol;
     protected boolean sign;
 

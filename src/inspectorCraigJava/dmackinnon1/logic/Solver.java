@@ -1,4 +1,5 @@
-package dmackinnon1.craig;
+package dmackinnon1.logic;
+
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Collection;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  */
 
-public class Solver implements Util {
+public class Solver {
     Set<Phrase> inputPhrases ;
     Set<Satisfier> inputSatisfiers;
     List<Proposition> props;
@@ -128,7 +129,6 @@ public class Solver implements Util {
     }
 
     public void traverseUnion(Union u, Collection<Phrase> newPhrases){
-        log(indent() + " traversing union: " + u);
         if (u.phrases.size() == 0) {
             return;
         }
@@ -156,8 +156,6 @@ public class Solver implements Util {
                 intersection.retainAll(singular.inputPhrases);
             }
         }
-
-        log(indent() + " adding intersection: " + intersection);
         newPhrases.addAll(intersection);
     }
 
@@ -177,9 +175,7 @@ public class Solver implements Util {
                 || (!satisfierCopy.equals(inputSatisfiers))) {
             phraseCopy = new HashSet<>(this.inputPhrases);
             satisfierCopy = new HashSet<Satisfier>(this.inputSatisfiers);
-            log(indent() + " reducing " + this.toString());
             this.traverse();
-            log(indent() + " after reducing: " + this.toString());
             this.separate();
         }
     }

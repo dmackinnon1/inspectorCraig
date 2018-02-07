@@ -1,4 +1,4 @@
-package dmackinnon1.craig;
+package dmackinnon1.logic;
 
 /**
  * A satisfier is a more complex proposition than a phrase (non standard nomenclature).

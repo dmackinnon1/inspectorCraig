@@ -1,5 +1,7 @@
 package dmackinnon1.craig;
 
+import dmackinnon1.logic.*;
+
 import java.util.List;
 import java.util.ArrayList;
 

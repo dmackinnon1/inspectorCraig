@@ -1,4 +1,4 @@
-package dmackinnon1.craig;
+package dmackinnon1.logic;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Collection;
  * Todo handle union of more complex propositions
  */
 
-public class Union implements Phrase, Satisfier, Util {
+public class Union implements Phrase, Satisfier {
 
     protected List<Phrase> phrases;
 
@@ -67,7 +67,11 @@ public class Union implements Phrase, Satisfier, Util {
             Union n = this.clone();
             Proposition pp = (Proposition) p;
             n.phrases.remove((Phrase) pp.negate());
-            return n;
+            if (n.phrases.size()==1){
+                return n.phrases.get(0);
+            } else {
+                return n;
+            }
         } else {
             return null;
         }

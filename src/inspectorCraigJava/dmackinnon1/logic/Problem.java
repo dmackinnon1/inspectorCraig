@@ -1,4 +1,4 @@
-package dmackinnon1.craig;
+package dmackinnon1.logic;
 import java.util.*;
 
 /**
@@ -14,7 +14,7 @@ public class Problem {
     Set<Phrase> premisePhrases = new HashSet<Phrase>();
     Set<Satisfier> premiseSatisfiers = new HashSet<Satisfier>();
     Set<Phrase> solution = new HashSet<Phrase>();
-    String description = "";
+    public String description = "";
 
     Solver solver;
 
@@ -140,15 +140,15 @@ public class Problem {
         this.premiseSatisfiers.add(new Implication(p, new Intersection(q,r)));
     }
 
-    protected int solutionCount() {
+    public int solutionCount() {
         return this.solution.size();
     }
 
-    protected int problemSize() {
+    public int problemSize() {
         return this.premiseSatisfiers.size() + this.premisePhrases.size();
     }
 
-    protected boolean shouldImprove(){
+    public boolean shouldImprove(){
         return solutionCount() < (this.propositions.size()+1)/2;
     }
 
