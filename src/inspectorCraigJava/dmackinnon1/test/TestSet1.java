@@ -1,6 +1,7 @@
 package dmackinnon1.test;
 
 import dmackinnon1.logic.Implication;
+import dmackinnon1.logic.Intersection;
 import dmackinnon1.logic.Proposition;
 import dmackinnon1.logic.Union;
 
@@ -45,10 +46,31 @@ public class TestSet1 {
         test3.name = "simple union";
         set1.add(test3);
 
+        //-------------------------
+        Test test4 = new Test() {
+            public void run() {
+                Union ab = new Union(a, b);
+                assertTrue(ab.negate().equals(new Intersection(a.negate(), b.negate())), "!(AuB) != A!*!B");
+                assertTrue(new Intersection(a, b).negate().equals(new Union(a.negate(), b.negate())), "!(A*B) != A!u!B");
+            }
+        };
+        test4.name = "deMorgan's law";
+        set1.add(test4);
+
+        //-------------------------
+        Test test5 = new Test() {
+            public void run() {
+                Implication ab = new Implication(a, b);
+                assertTrue(ab.negate().equals(new Intersection(a, b.negate())), "!(A->B) != A*!B");
+            }
+        };
+        test5.name = "negate implication";
+        set1.add(test5);
     }
 
 
     public static void main(String[] args){
+        System.out.println(">> Running TestSet1 <<");
         TestSet1 ts1 = new TestSet1();
         ts1.setup();
         ts1.set1.run();

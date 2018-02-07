@@ -10,7 +10,7 @@ import java.util.Collection;
  * Todo handle union of more complex propositions
  */
 
-public class Union implements Phrase, Satisfier {
+public class Union implements Phrase {
 
     protected List<Phrase> phrases;
 
@@ -105,6 +105,17 @@ public class Union implements Phrase, Satisfier {
         } else {
             return false;
         }
+    }
+
+    /*
+     * Negation of a Union follows DeMorgan's law
+     */
+    public Phrase negate() {
+        List<Phrase> negated = new ArrayList<Phrase>();
+        for (Phrase p:this.phrases) {
+            negated.add(p.negate());
+        }
+        return new Intersection(negated.toArray(new Phrase[negated.size()]));
     }
 
 }

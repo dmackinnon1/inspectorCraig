@@ -70,4 +70,24 @@ public class Intersection implements Phrase {
         }
     }
 
+    /*
+     * Negation of an Intersection follows DeMorgan's law
+     */
+    public Phrase negate() {
+        List<Phrase> negated = new ArrayList<Phrase>();
+        for (Phrase p:this.phrases) {
+            negated.add(p.negate());
+        }
+        return new Union(negated.toArray(new Phrase[negated.size()]));
+    }
+
+    public boolean satisfies(Phrase phrase) {
+        return this.phrases.contains(phrase);
+    }
+
+    public Phrase resolve(Phrase phrase){
+        if (satisfies(phrase)) return phrase;
+        return null;
+    }
+
 }

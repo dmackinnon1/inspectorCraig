@@ -6,7 +6,7 @@ import java.util.Collection;
  * TODO: handle negation of A->B, more involved phrases, better contrapositive.
  */
 
-public class Implication implements Phrase, Satisfier {
+public class Implication implements Phrase {
 
     protected Phrase antecedent;
     protected Phrase consequent;
@@ -87,6 +87,17 @@ public class Implication implements Phrase, Satisfier {
         }
         if (satisfies(p)) return this.consequent;
         return null;
+    }
+
+    /*
+     * A -> B is equivalent to !A or B
+     */
+    public Union asUnion(){
+        return new Union(this.antecedent.negate(), this.consequent);
+    }
+
+    public Phrase negate() {
+        return this.asUnion().negate();
     }
 
     @Override

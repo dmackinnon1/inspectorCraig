@@ -9,4 +9,8 @@ public interface Phrase {
     void addTo(Collection<Phrase> list);
 
     String internalToString();
+    Phrase negate();
+    boolean satisfies(Phrase phrase);
+    Phrase resolve(Phrase phrase);
+
 }

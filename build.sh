@@ -17,6 +17,6 @@ $JAVA_HOME/bin/jar cfe ../target/generator.jar dmackinnon1.puzzles.PuzzleWriter 
 cd ..
 
 echo '...executing jar to generate puzzle data in data directory'
-$JAVA_HOME/bin/java -jar target/generator.jar
+$JAVA_HOME/bin/java -jar target/generator.jar "$1"
 
-echo '...complete - check output in data directory'
+echo '...complete'

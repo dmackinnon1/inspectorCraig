@@ -1,6 +1,5 @@
 package dmackinnon1.craig;
 
-import dmackinnon1.logic.Problem;
 import dmackinnon1.puzzles.PuzzleWriter;
 
 import java.util.List;

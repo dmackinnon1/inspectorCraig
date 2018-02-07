@@ -1,4 +1,6 @@
-package dmackinnon1.logic;
+package dmackinnon1.craig;
+import dmackinnon1.logic.*;
+
 import java.util.*;
 
 /**
@@ -11,9 +13,9 @@ import java.util.*;
 public class Problem {
 
     List<Proposition> propositions;
-    Set<Phrase> premisePhrases = new HashSet<Phrase>();
-    Set<Satisfier> premiseSatisfiers = new HashSet<Satisfier>();
-    Set<Phrase> solution = new HashSet<Phrase>();
+    Set<Phrase> premisePhrases = new HashSet<>();
+    Set<Phrase> premiseSatisfiers = new HashSet<>();
+    Set<Phrase> solution = new HashSet<>();
     public String description = "";
 
     Solver solver;
@@ -51,7 +53,7 @@ public class Problem {
         for (Phrase p: this.premisePhrases){
             psList.add(p.toString());
         }
-        for (Satisfier s: this.premiseSatisfiers){
+        for (Phrase s: this.premiseSatisfiers){
             psList.add(s.toString());
         }
         return psList.toString();

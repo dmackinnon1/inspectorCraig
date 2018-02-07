@@ -1,8 +1,10 @@
 package dmackinnon1.puzzles;
 import dmackinnon1.craig.BaseGenerator;
-import dmackinnon1.logic.Problem;
+import dmackinnon1.craig.Problem;
 import dmackinnon1.craig.Series1Generator;
 import dmackinnon1.craig.Series7Generator;
+import dmackinnon1.test.TestSet1;
+import dmackinnon1.test.TestSet2;
 
 import java.util.List;
 import java.nio.file.Path;
@@ -19,19 +21,22 @@ import java.util.ArrayList;
 public class PuzzleWriter {
     public static String FILENAME_3_PUZZLES = "data/craig3.json";
     public static String FILENAME_4_PUZZLES = "data/craig4.json";
-
     public static void main(String[] input) throws Exception {
+        if (input.length > 0 && input[0].trim().equals("test")) {
+            System.out.println(input[0]);
+            TestSet1.main(null);
+            TestSet2.main(null);
+        } else {
+            System.out.println("generating 3 phrase problems...");
+            Path file = Paths.get(System.getProperty("user.dir"), FILENAME_3_PUZZLES);
+            List<String> jsons = threePhrasesProblems();
+            Files.write(file, jsons, Charset.forName("UTF-8"));
 
-        System.out.println("generating 3 phrase problems...");
-        Path file = Paths.get(System.getProperty("user.dir"), FILENAME_3_PUZZLES);
-        List<String> jsons = threePhrasesProblems();
-        Files.write(file, jsons, Charset.forName("UTF-8"));
-
-        System.out.println("generating 4 phrase problems...");
-        file = Paths.get(System.getProperty("user.dir"), FILENAME_4_PUZZLES);
-        jsons = fourPhrasesProblems();
-        Files.write(file, jsons, Charset.forName("UTF-8"));
-
+            System.out.println("generating 4 phrase problems...");
+            file = Paths.get(System.getProperty("user.dir"), FILENAME_4_PUZZLES);
+            jsons = fourPhrasesProblems();
+            Files.write(file, jsons, Charset.forName("UTF-8"));
+        }
     }
 
     public static List<String> threePhrasesProblems(){

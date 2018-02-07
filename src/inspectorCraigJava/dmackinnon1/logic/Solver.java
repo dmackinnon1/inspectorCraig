@@ -20,17 +20,17 @@ import java.util.List;
  */
 
 public class Solver {
-    Set<Phrase> inputPhrases ;
-    Set<Satisfier> inputSatisfiers;
-    List<Proposition> props;
-    int recursionLevel = 1;
+    public Set<Phrase> inputPhrases ;
+    public Set<Phrase> inputSatisfiers;
+    public List<Proposition> props;
+    public int recursionLevel = 1;
 
     public Solver(){
         this.inputPhrases = new HashSet<>();
         this.inputSatisfiers = new HashSet<>();
     }
 
-    public Solver(List<Proposition> props, Collection<Phrase> ip, Collection<Satisfier> is){
+    public Solver(List<Proposition> props, Collection<Phrase> ip, Collection<Phrase> is){
         this();
         this.props = props;
         this.inputPhrases.addAll(ip);
@@ -68,22 +68,28 @@ public class Solver {
         return this;
     }
 
-    public Solver addSatisfier(Satisfier s) {
+    public Solver addSatisfier(Phrase s) {
         this.inputSatisfiers.add(s);
         return this;
     }
 
     public void separate(){
-        Set<Phrase> newPhrases = new HashSet<Phrase>();
+        Set<Phrase> newPhrases = new HashSet<>();
         for (Phrase p: this.inputPhrases){
-            if (p instanceof Satisfier) {
-                Satisfier s = (Satisfier)p;
-                this.addSatisfier(s);
-            } else {
+            if (p instanceof Proposition) {
                 newPhrases.add(p);
-            }
+            } else {
+                this.addSatisfier(p);            }
+        }
+        Set<Phrase> satisfiers = new HashSet<>();
+        for (Phrase p: this.inputSatisfiers){
+            if (p instanceof Proposition) {
+                newPhrases.add(p);
+            } else {
+                satisfiers.add(p);            }
         }
         this.inputPhrases = newPhrases;
+        this.inputSatisfiers = satisfiers;
     }
 
 
@@ -109,8 +115,8 @@ public class Solver {
 
     public void traverse(){
         Set<Phrase> newPhrases = new HashSet<>();
-        Set<Satisfier> removable = new HashSet<>();
-        for (Satisfier s: this.inputSatisfiers){
+        Set<Phrase> removable = new HashSet<>();
+        for (Phrase s: this.inputSatisfiers){
             for (Phrase p: this.inputPhrases){
                 if (s.satisfies(p)){
                     s.resolve(p).addTo(newPhrases);
@@ -137,7 +143,7 @@ public class Solver {
             return;
         }
         //satisfiers without the union
-        Set<Satisfier> others = new HashSet<>(this.inputSatisfiers);
+        Set<Phrase> others = new HashSet<>(this.inputSatisfiers);
         others.remove(u);
 
         boolean first = true;
@@ -168,13 +174,13 @@ public class Solver {
 
     public void evaluate() {
         Set<Phrase> phraseCopy = new HashSet<>();
-        Set<Satisfier> satisfierCopy = new HashSet<>();
+        Set<Phrase> satisfierCopy = new HashSet<>();
         this.separate();
         if(!this.isConsistent()) return;
         while ((!phraseCopy.equals(this.inputPhrases))
                 || (!satisfierCopy.equals(inputSatisfiers))) {
             phraseCopy = new HashSet<>(this.inputPhrases);
-            satisfierCopy = new HashSet<Satisfier>(this.inputSatisfiers);
+            satisfierCopy = new HashSet<Phrase>(this.inputSatisfiers);
             this.traverse();
             this.separate();
         }
@@ -198,5 +204,4 @@ public class Solver {
     public String toString() {
         return "p: " + this.inputPhrases + ", s: " +this.inputSatisfiers;
     }
-
 }

@@ -8,8 +8,8 @@ import java.util.Collection;
  */
 
 public class Proposition implements Phrase {
-    protected String symbol;
-    protected boolean sign;
+    public String symbol;
+    public boolean sign;
 
     public Proposition (String symbol){
         this.symbol = symbol;
@@ -63,5 +63,14 @@ public class Proposition implements Phrase {
         Proposition n = this.clone();
         n.sign = !n.sign;
         return n;
+    }
+
+    public boolean satisfies(Phrase phrase){
+        return this.equals(phrase);
+    }
+
+    public Phrase resolve(Phrase phrase){
+        if (this.satisfies(phrase)) return this;
+        return null;
     }
 }
