@@ -66,7 +66,7 @@ public class Union implements Phrase {
         if (satisfies(p)){
             Union n = this.clone();
             Proposition pp = (Proposition) p;
-            n.phrases.remove((Phrase) pp.negate());
+            n.phrases.remove(pp.negate());
             if (n.phrases.size()==1){
                 return n.phrases.get(0);
             } else {
@@ -106,7 +106,6 @@ public class Union implements Phrase {
             return false;
         }
     }
-
     /*
      * Negation of a Union follows DeMorgan's law
      */
@@ -116,6 +115,14 @@ public class Union implements Phrase {
             negated.add(p.negate());
         }
         return new Intersection(negated.toArray(new Phrase[negated.size()]));
+    }
+
+    public Phrase bind(String a, String x) {
+        List<Phrase> bound = new ArrayList<Phrase>();
+        for (Phrase p : this.phrases) {
+            bound.add(p.bind(a, x));
+        }
+        return new Union(bound.toArray(new Phrase[bound.size()]));
     }
 
 }

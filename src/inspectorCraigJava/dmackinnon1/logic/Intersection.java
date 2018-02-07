@@ -90,4 +90,12 @@ public class Intersection implements Phrase {
         return null;
     }
 
+    public Phrase bind(String a, String x){
+        List<Phrase> bound = new ArrayList<Phrase>();
+        for (Phrase p : this.phrases){
+            bound.add(p.bind(a,x));
+        }
+        return new Intersection(bound.toArray(new Phrase[bound.size()]));
+    }
+
 }

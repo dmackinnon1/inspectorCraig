@@ -23,7 +23,7 @@ public class Scratchpad {
         int pSCount = 0;
         List<Problem> ps = g.generate72v3();
         for(Problem p:ps){
-            g.improve(p);
+            BaseGenerator.improve(p);
             if (!p.isConsistent()) inconsistentCount++;
             if (p.problemSize() > maxProblemSize ) maxProblemSize = p.problemSize();
             if (p.problemSize() < minProblemSize ) minProblemSize = p.problemSize();

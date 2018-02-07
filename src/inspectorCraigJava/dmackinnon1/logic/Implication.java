@@ -3,7 +3,6 @@ import java.util.Collection;
 
 /**
  * Models an implication A -> B.
- * TODO: handle negation of A->B, more involved phrases, better contrapositive.
  */
 
 public class Implication implements Phrase {
@@ -51,27 +50,18 @@ public class Implication implements Phrase {
     protected boolean intersectionallySatisfies(Phrase phrase) {
         if (this.antecedent instanceof Intersection) {
             Intersection i = (Intersection) this.antecedent;
-            if (i.phrases.contains(phrase)){
-                return true;
-            }
+            return i.phrases.contains(phrase);
         }
         return false;
     }
 
     protected boolean reverseSatisfies(Phrase p) {
-        if (!(this.antecedent instanceof Proposition)) return false; //can't handle more complex cases
-        if (this.consequent instanceof Proposition && p instanceof Proposition) {
-            Proposition c = (Proposition) this.consequent;
-            Proposition pp = (Proposition) p;
-            return c.negate().equals(pp);
-        } else {
-            return false;
-        }
+        return this.consequent.negate().equals(p);
     }
 
     @Override
     public Phrase resolve(Phrase p){
-        if (reverseSatisfies(p)) return ((Proposition) this.antecedent).negate();
+        if (reverseSatisfies(p)) return this.antecedent.negate();
         if (intersectionallySatisfies(p)) {
             Intersection i = (Intersection) this.antecedent;
             if(i.phrases.size() < 2) {
@@ -96,6 +86,19 @@ public class Implication implements Phrase {
         return new Union(this.antecedent.negate(), this.consequent);
     }
 
+    public boolean equals(Object o) {
+        if (o instanceof Implication ){
+            Implication i = (Implication) o;
+            return this.consequent.equals(i.consequent) && this.antecedent.equals(i.antecedent);
+        } else if (o instanceof Union){
+            Union u = (Union) o;
+            return this.asUnion().equals(u);
+        } else {
+            return false;
+        }
+    }
+
+
     public Phrase negate() {
         return this.asUnion().negate();
     }
@@ -104,4 +107,8 @@ public class Implication implements Phrase {
     public void addTo(Collection<Phrase> list) {
         list.add(this);
     }
+    public Phrase bind(String a, String x) {
+        return new Implication(this.antecedent.bind(a,x), this.consequent.bind(a,x));
+    }
+
 }

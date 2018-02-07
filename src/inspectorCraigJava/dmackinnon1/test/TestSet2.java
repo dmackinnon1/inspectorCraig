@@ -12,9 +12,11 @@ public class TestSet2 {
 
         final Proposition a = new Proposition("A");
         final Proposition b = new Proposition("B");
+        final Proposition c = new Proposition("C");
         final List<Proposition> props = new ArrayList<>();
         props.add(a);
         props.add(b);
+        props.add(c);
 
         Solver s = new Solver().propositions(props);
 
@@ -81,11 +83,26 @@ public class TestSet2 {
         };
         test5.name = "solver, union and contradiction";
         set1.add(test5);
+
+        //--------------
+        Test test6 = new Test() {
+            public void run() {
+                Solver k = s.clone();
+                k.addSatisfier(new Implication(a,b));
+                k.addSatisfier(new Implication(b,c));
+                k.addSatisfier(a);
+                k.solve();
+                assertTrue(k.inputPhrases.contains(b), "Solver failed to deduce from implication");
+                assertTrue(k.inputPhrases.contains(c), "Solver failed to deduce from composed implication");
+            }
+        };
+        test6.name = "solver, composed implication";
+        set1.add(test6);
     }
 
 
     public static void main(String[] args){
-        System.out.println(">> Running TestSet2 <<");
+        System.out.println(">> Running TestSet2 - simple deductions <<");
         TestSet2 ts1 = new TestSet2();
         ts1.setup();
         ts1.set1.run();

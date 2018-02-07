@@ -73,4 +73,12 @@ public class Proposition implements Phrase {
         if (this.satisfies(phrase)) return this;
         return null;
     }
+
+    public Phrase bind(String a, String x){
+        Proposition p =  this.clone();
+        if (this.symbol.equals(x)){
+            p.symbol = a;
+        }
+        return p;
+    }
 }

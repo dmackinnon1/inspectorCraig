@@ -5,6 +5,7 @@ import dmackinnon1.craig.Series1Generator;
 import dmackinnon1.craig.Series7Generator;
 import dmackinnon1.test.TestSet1;
 import dmackinnon1.test.TestSet2;
+import dmackinnon1.test.TestSet3;
 
 import java.util.List;
 import java.nio.file.Path;
@@ -23,9 +24,9 @@ public class PuzzleWriter {
     public static String FILENAME_4_PUZZLES = "data/craig4.json";
     public static void main(String[] input) throws Exception {
         if (input.length > 0 && input[0].trim().equals("test")) {
-            System.out.println(input[0]);
             TestSet1.main(null);
             TestSet2.main(null);
+            TestSet3.main(null);
         } else {
             System.out.println("generating 3 phrase problems...");
             Path file = Paths.get(System.getProperty("user.dir"), FILENAME_3_PUZZLES);

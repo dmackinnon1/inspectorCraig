@@ -66,17 +66,28 @@ public class TestSet1 {
         };
         test5.name = "negate implication";
         set1.add(test5);
+
+        //-------------------------
+        Test test6 = new Test() {
+            public void run() {
+                Union ab = new Union(a,b);
+                Intersection aib = new Intersection(a,b);
+                Implication aimpb = new Implication(a,b);
+                assertTrue(a.negate().negate().equals(a), "!!A != A");
+                assertTrue(ab.negate().negate().equals(ab), "!!(AuB != AuB");
+                assertTrue(aib.negate().negate().equals(aib), "!!(A*B != A*B");
+                assertTrue(aimpb.negate().negate().equals(aimpb.asUnion()), "!!(A->B != !AuB");
+            }
+        };
+        test6.name = "double negation";
+        set1.add(test6);
     }
 
 
     public static void main(String[] args){
-        System.out.println(">> Running TestSet1 <<");
+        System.out.println(">> Running TestSet1 - basic operations <<");
         TestSet1 ts1 = new TestSet1();
         ts1.setup();
         ts1.set1.run();
     }
-
-
-
-
 }
