@@ -71,4 +71,4 @@ ran 6 tests with no errors
 ## Solving Puzzles
 Although you can read the raw puzzle data, the intention is that you will interact with the puzzle interface provided by **index.html**. This page loads the puzzle data and presents the puzzles one at a time in an interactive format.
 
-A live version of the page can be found at [https://dmackinnon1.github.io/inspectorCraig/]
+A live version of the page can be found at (https://dmackinnon1.github.io/inspectorCraig/)
