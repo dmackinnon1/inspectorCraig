@@ -22,7 +22,7 @@ problems considered too large: 46
 problems generated: 400
 ...complete
 ```
-The "3 phrase" problems, that involve *A*, *B*, and *C*, are deterministically generated based on problems found in Smullyan's book. The "4 phrase" problems, that add an additional character who goes by *D* have a certain amount of randomness in their generation, so each run gives a different output for these problems. Because of the randomness in the "4 phrase" problems, some generated problems might get rejected, either for being inconsistent, or having too many clues.
+The "3 phrase" problems, that involve *A*, *B*, and *C*, are deterministically generated based on problems found in Smullyan's book. The "4 phrase" problems, which add an additional character who goes by *D*, have a certain amount of randomness in their generation. Because of the random element in generating the "4 phrase" problems, some generated problems may be rejected, either for being inconsistent or for having too many clues. Every build will generate the same "3 phrase" problem set, but may generate a different "4 phrase" problem set on subsequent runs.
 
 The generated puzzles are written out like the one shown below.
 
