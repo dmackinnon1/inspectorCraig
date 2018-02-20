@@ -6,6 +6,7 @@ import dmackinnon1.craig.Series7Generator;
 import dmackinnon1.test.TestSet1;
 import dmackinnon1.test.TestSet2;
 import dmackinnon1.test.TestSet3;
+import dmackinnon1.tiger.Generator;
 
 import java.util.List;
 import java.nio.file.Path;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 public class PuzzleWriter {
     public static String FILENAME_3_PUZZLES = "data/craig3.json";
     public static String FILENAME_4_PUZZLES = "data/craig4.json";
+    public static String FILEMAME_TIGER_PUZZLES = "data/tiger.json";
+
     public static void main(String[] input) throws Exception {
         if (input.length > 0 && input[0].trim().equals("test")) {
             TestSet1.main(null);
@@ -33,9 +36,14 @@ public class PuzzleWriter {
             List<String> jsons = threePhrasesProblems();
             Files.write(file, jsons, Charset.forName("UTF-8"));
 
-            System.out.println("generating 4 phrase problems...");
+            System.out.println("generating 4 phrase problems... (this may take a while)");
             file = Paths.get(System.getProperty("user.dir"), FILENAME_4_PUZZLES);
             jsons = fourPhrasesProblems();
+            Files.write(file, jsons, Charset.forName("UTF-8"));
+
+            System.out.println("generating tiger & treasure problems...");
+            file = Paths.get(System.getProperty("user.dir"), FILEMAME_TIGER_PUZZLES);
+            jsons = tigerProblems();
             Files.write(file, jsons, Charset.forName("UTF-8"));
         }
     }
@@ -57,6 +65,7 @@ public class PuzzleWriter {
             count ++;
         }
         s.add("]");
+        System.out.println("problems generated: " + count);
         return s;
     }
 
@@ -78,6 +87,25 @@ public class PuzzleWriter {
             count ++;
         }
         s.add("]");
+        return s;
+    }
+
+    public static List<String> tigerProblems(){
+        Generator g = new Generator();
+        List<dmackinnon1.tiger.Problem> problems = g.generate();
+        List<String> s = new ArrayList<String>();
+        s.add("[");
+        int count = 0;
+        for (dmackinnon1.tiger.Problem p : problems) {
+            if (count < problems.size() - 1) {
+                s.add("\t" + p.toJson() + ",");
+            } else {
+                s.add("\t" + p.toJson());
+            }
+            count++;
+        }
+        s.add("]");
+        System.out.println("problems generated: " + count);
         return s;
     }
 }

@@ -125,4 +125,7 @@ public class Union implements Phrase {
         return new Union(bound.toArray(new Phrase[bound.size()]));
     }
 
+    public List<Phrase>  getPhrases(){
+        return phrases;
+    }
 }

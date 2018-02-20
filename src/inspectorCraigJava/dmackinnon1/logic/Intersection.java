@@ -98,4 +98,7 @@ public class Intersection implements Phrase {
         return new Intersection(bound.toArray(new Phrase[bound.size()]));
     }
 
+    public List<Phrase>  getPhrases(){
+        return phrases;
+    }
 }

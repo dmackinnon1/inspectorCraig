@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/craig-util.js"></script>
+<script src="js/craig-parse.js"></script>
+<script src="js/tiger.js"></script>
+<script type="text/javascript" async	
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<title>Tigers and Treasure</title>
+</head>
+<style>
+ul {
+    padding-left: 40px;
+    list-style-type: none;
+}
+li {
+    padding-bottom: 10px;
+}
+table, tr {
+    padding: 4px;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse; 
+    margin: auto;
+}
+th, td {
+    padding: 10px;
+}
+body {
+	background-color:lightgrey;
+}
+.buttonDiv {
+    display: inline-block;
+    padding: 2px;
+    border: 2px;
+}
+.centered {
+    text-align: center;
+}
+.prop-column {
+	font-size:large;
+}
+.main-column {
+	background-color:white;
+}
+</style>
+<script>
+let tigerData = [];
+let puzzle = null;
+//load data
+$(document).ready(function(){
+	console.log("about to fetch remote data");
+	$.getJSON("data/tiger.json", function(data){
+		tigerData = data;
+	}).done(function() {
+		initialize();
+		reset();
+	});
+});
+//initialize display
+$(document).ready(function(){
+	$("#resetButton").on("click", function(){
+		reset();
+	});
+	$("#solve").on("click", function(event){
+			if (display.disabled) return;
+			$("#reset").addClass("btn-success");
+			solvePuzzle();
+	});
+	
+	display.puzzleIntro = document.getElementById("puzzleIntro");
+	display.solutionDisplay  = document.getElementById("solutionDisplay");
+	display.puzzleDescription = document.getElementById("puzzleDescription");
+	display.doorDisplay = document.getElementById("doorDisplay");
+	display.puzzleTitle = document.getElementById("puzzleTitle");
+	//display.latexDisplay = document.getElementById("latexDisplay");
+});
+
+function initialize(){
+	tiger.puzzles = tigerData;	
+}
+
+function reset() {
+	puzzleReset();
+	MathJax.Hub.Typeset();
+};
+
+
+</script>
+
+<body>
+
+<nav class="navbar navbar-default" style="margin-bottom:0px">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="..">
+				<img src="imgs/github_badge1.png" style="max-width:100%;max-height:100%" >
+			</a>
+			<p class="navbar-text navbar-right">
+				<a href=".." class="navbar-link">dmackinnon1.github.io</a>
+			</p>
+		</div>
+		</div>
+</nav>
+
+<div class="container-fluid">
+	<div class='row'>
+	<div class='col-sm-1 col-lg-3'></div>
+	<div class='col-sm-10 col-lg-6 main-column'>
+	<div class="page-header">
+		<h1>Treasure or Tiger?</h1>
+	</div> 		
+
+	<p class='puzzle-text'>
+	Raymond Smullyan's book of puzzles "The Lady or The Tiger?" included a set of logic puzzles that
+	imagined a kingdom where prisoners were offered a choice between two doors.
+	The doors had inscriptions which provided clues to the contents of the rooms beyond, which would either be a lady or a tiger. If the prisoner chose a room with a tiger, they would be devoured, if they chose the room	with the lady, they would be free, and would marry the lady. 
+	<br>
+	<br>
+	We imagine that the ladies involved in this unfortunate situation have freed themselves and moved
+	into their own castle, taking the tigers with them. Travelers who stay at the ladies' castle repay
+	their hosts by cleaning one of two rooms. The room either contains treasure, from which the kind hostsoften allow a guest to take a token to remember their stay, or one of 
+	the rescued tigers, which are sometimes unchained and always messy.
+	<br>
+	<br>
+	In this puzzle, you are a traveller who is staying at the ladies castle. Use the inscriptions on the doors to decide whether each leads to treasure or a tiger; or you may find that the contents cannot be determened from the inscriptions. An additional twist: if the fist door leads to treasure, its inscription is true, but if it leads to a tiger, its inscription is false; if the second door leads to treasure its inscription is false, but if it leads to a tiger its inscription is true.
+	<hr>
+	<h2 id="puzzleTitle"></h2>
+	<div id="puzzleIntro" class='puzzle-text'></div>	
+	<div id="puzzleDescription" class='puzzle-text'></div>	
+	
+	<!--
+	<button type='button' 
+	class='btn btn-info' data-toggle='collapse' data-target='#latexDisplayHolder'>
+		Show Propositions </button>
+	<div id='latexDisplayHolder' class='collapse'>
+		<br>
+		<p><em>The inscriptions on the doors can be translated into logical formulae - if you are familiar with
+		the notation, this might help you find out what is behind the doors.</em></p>
+		<div id='latexDisplay'></div>
+	</div>
+	-->
+	<hr>
+	<div id="doorDisplay"></div>
+	<br>
+	<div id="soveButton">
+		<button type="button" id="solve" class="btn btn-primary typeButton">Solve</span></button>
+	</div>
+	<br>
+	<div id="solutionDisplay" class="puzzle-text"></div>	
+	<hr>
+	<div id="resetButtonHolder">
+		<button type="button" id="resetButton", class="btn btn-primary typeButton">New Puzzle</span></button>
+	</div>
+	<br>
+	<br>
+</div>
+	<div class='col-sm-1 col-lg-3'></div>
+</div>
+
+</div>
+</body>
+</html>
