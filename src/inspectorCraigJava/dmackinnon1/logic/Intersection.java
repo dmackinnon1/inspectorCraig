@@ -86,7 +86,7 @@ public class Intersection implements Phrase {
     }
 
     public Phrase resolve(Phrase phrase){
-        if (satisfies(phrase)) return phrase;
+        if (satisfies(phrase)) return this;
         return null;
     }
 

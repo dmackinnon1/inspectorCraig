@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Collection;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Solver is the main logic engine that will combine phrases and satisfiers to
@@ -128,6 +129,9 @@ public class Solver {
                 Union u = (Union)s;
                 traverseUnion(u, newPhrases);
             }
+            if (s instanceof Intersection) {
+                s.addTo(newPhrases);
+            }
         }
         this.inputSatisfiers.removeAll(removable);
         this.inputPhrases.addAll(newPhrases);
@@ -148,13 +152,17 @@ public class Solver {
 
         boolean first = true;
         Set<Phrase> intersection = new HashSet<>();
-        for(Phrase p: u.phrases){
+        List<Phrase> noContradictions = new ArrayList<Phrase>();
 
+        for(Phrase p: u.phrases){
             Set<Phrase> pcopy = new HashSet<>(this.inputPhrases);
             pcopy.add(p);
             Solver singular = new Solver(this.props, pcopy, others);
             singular.recursionLevel(this.recursionLevel ++);
             singular.evaluate();
+            if (!singular.isConsistent()) {
+                continue;
+            }
             if (first){
                 intersection.addAll(singular.inputPhrases);
                 first = false;
