@@ -104,17 +104,17 @@ public class TestSet2 {
         Test test7 = new Test() {
             public void run() {
                 Solver k = s.clone();
-                Intersection aIb = new Intersection(a,b);
-                Intersection naInb = new Intersection(a.negate(), b.negate());
-                Union u = new Union(aIb,naInb);
+                Intersection aIb = new Intersection(a,b); //a*b
+                Intersection naInb = new Intersection(a.negate(), b.negate()); //an*bn
+                Union u = new Union(aIb,naInb); //union of a*b and an*bn
                 Implication imp1 = new Implication(a,u);
                 Implication imp2 = new Implication(a.negate(),a);
                 k.addSatisfier(imp1);
                 k.addSatisfier(imp2);
-                System.out.println(k);
-                System.out.println(k);
-                assertTrue(k.inputPhrases.contains(a), "Solver failed to deduce from contradiction");
-                assertTrue(k.inputPhrases.contains(b), "Solver failed to deduce nested union and intersection");
+                k.solve();
+                assertTrue(k.isConsistent(), "Solver failed to get consistent solution " + k.toString());
+                assertTrue(k.inputPhrases.contains(a), "Solver failed to deduce from contradiction " + k.toString());
+                assertTrue(k.inputPhrases.contains(b), "Solver failed to deduce nested union and intersection "+ k.toString());
             }
         };
         test7.name = "solver, nested intersection";
@@ -133,6 +133,51 @@ public class TestSet2 {
         test8.name = "solver, basic intersection";
         set1.add(test8);
 
+        /*
+         "door1_propositions": [
+            "(D1 -> [-D1, -D2])",
+            "(-D1 -> <D1, D2>)"
+            ],
+            "door2_propositions": [
+            "(D2 -> <[-D1, -D2], [D1, D2]>)",
+            "(-D2 -> [<D1, D2>, <-D1, -D2>])"
+           ],
+            "solution": [
+            "D1",
+            "-D2"
+            ],
+            should actually be no solution
+         */
+        Test test9 = new Test() {
+            public void run() {
+                Solver k = s.clone();
+                Implication i1 = new Implication(a, new Union(a.negate(), b.negate()));
+                Implication i2 = new Implication(a.negate(), new Intersection(a, b));
+                Implication i4 = new Implication(b.negate(), new Union(new Intersection(a,b),new Intersection(a.negate(),b.negate())));
+                k.addSatisfier(i1);
+                k.addSatisfier(i2);
+                k.addSatisfier(i4);
+                k.solve();
+                assertTrue(!k.isConsistent(), "Solver failed to find contradiction " + k.toString());
+
+            }
+        };
+        test9.name = "solver, late contradiction";
+        set1.add(test9);
+
+        Test test10 = new Test() {
+            public void run() {
+                Solver k = s.clone();
+                Implication i1 = new Implication(a, a.negate());
+                k.addSatisfier(i1);
+                k.solve();
+                //assertTrue(!k.isConsistent(), "Solver failed to find contradiction " + k.toString());
+                assertTrue(k.inputPhrases.contains(a.negate()), "Solver failed to find contradiction " + k.toString());
+
+            }
+        };
+        test10.name = "solver, contradictory implication";
+        set1.add(test10);
     }
 
     public static void main(String[] args){
@@ -141,5 +186,6 @@ public class TestSet2 {
         ts1.setup();
         ts1.set1.run();
     }
+
 
 }

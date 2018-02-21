@@ -24,11 +24,17 @@ public class Solver {
     public Set<Phrase> inputPhrases ;
     public Set<Phrase> inputSatisfiers;
     public List<Proposition> props;
-    public int recursionLevel = 1;
+    public Solver parent = null;
+    public Phrase phraseWithContradiction = null;
 
     public Solver(){
         this.inputPhrases = new HashSet<>();
         this.inputSatisfiers = new HashSet<>();
+        this.parent = this;
+    }
+
+    protected void setParentOnChild(Solver solver) {
+        solver.parent = this.parent;
     }
 
     public Solver(List<Proposition> props, Collection<Phrase> ip, Collection<Phrase> is){
@@ -41,18 +47,6 @@ public class Solver {
     public Solver propositions(List<Proposition> props){
         this.props = props;
         return this;
-    }
-
-    public void recursionLevel(int r){
-        this.recursionLevel = r;
-    }
-
-    protected String indent() {
-        String indent = "-";
-        for (int i = 0; i < recursionLevel; i++){
-            indent += "-";
-        }
-        return indent;
     }
 
     public Solver clone(){
@@ -114,6 +108,15 @@ public class Solver {
         }
     }
 
+    protected void addExcludedMiddles(){
+        for (Proposition p :this.props){
+            Union u = new Union(p,p.negate());
+            if (!this.inputSatisfiers.contains(u)){
+                this.inputSatisfiers.add(u);
+            }
+        }
+    }
+
     public void traverse(){
         Set<Phrase> newPhrases = new HashSet<>();
         Set<Phrase> removable = new HashSet<>();
@@ -129,9 +132,16 @@ public class Solver {
                 Union u = (Union)s;
                 traverseUnion(u, newPhrases);
             }
+            //special intersection case
             if (s instanceof Intersection) {
                 s.addTo(newPhrases);
             }
+            //special implicationcase
+
+            if (s instanceof Implication) {
+               // traversImplication((Implication)s, newPhrases);
+            }
+
         }
         this.inputSatisfiers.removeAll(removable);
         this.inputPhrases.addAll(newPhrases);
@@ -152,15 +162,14 @@ public class Solver {
 
         boolean first = true;
         Set<Phrase> intersection = new HashSet<>();
-        List<Phrase> noContradictions = new ArrayList<Phrase>();
-
+        List<Phrase> withContradictions = new ArrayList<>();
         for(Phrase p: u.phrases){
             Set<Phrase> pcopy = new HashSet<>(this.inputPhrases);
             pcopy.add(p);
             Solver singular = new Solver(this.props, pcopy, others);
-            singular.recursionLevel(this.recursionLevel ++);
             singular.evaluate();
             if (!singular.isConsistent()) {
+                withContradictions.add(p);
                 continue;
             }
             if (first){
@@ -170,12 +179,33 @@ public class Solver {
                 intersection.retainAll(singular.inputPhrases);
             }
         }
+        if (withContradictions.containsAll(u.getPhrases())){
+            phraseWithContradiction = u;
+        }
         newPhrases.addAll(intersection);
     }
 
+    /*
+    * If the consequent contradicts the antecedent, then we assume the negation
+    * of the antecedant
+    */
+    public void traversImplication(Implication i, Collection<Phrase> newPhrases){
+        Phrase ante = i.antecedent;
+        Phrase cons = i.consequent;
+        List<Phrase> internalPhrases = new ArrayList<>();
+        List<Phrase> internalSatisfiers = new ArrayList<>();
+        internalPhrases.add(ante);
+        internalSatisfiers.add(cons);
+        Solver iSolver = new Solver(this.props, internalPhrases, internalSatisfiers);
+        iSolver.solve();
+        if (!iSolver.isConsistent()){
+            newPhrases.add(ante.negate());
+        }
+    }
 
 
     public void solve(){
+        //addExcludedMiddles();
         checkForContradictions();
         evaluate();
     }
@@ -196,6 +226,11 @@ public class Solver {
 
     public boolean isConsistent(){
         Set<Phrase> others;
+        if (phraseWithContradiction != null) {
+            //System.out.println("contradiction in " + this.toString() +": " + phraseWithContradiction);
+            return false;
+
+        }
         for (Phrase p: this.inputPhrases){
             if (p instanceof Proposition) {
                 others = new HashSet<>(this.inputPhrases);

@@ -17,15 +17,16 @@ public class TestSuite {
             System.out.println("running test: " + test.name);
             test.run();
             if (test.hasError()){
-                System.out.println(" - encountered error: " + test.message());
+                //System.out.println(" - encountered error: " + test.message());
                 fails.add(test);
             }
         }
         if (fails.size() == 0) {
             System.out.println("ran " + tests.size() + " tests with no errors");
         } else {
-            System.out.println("Errors were encountered: ");
+            System.out.println("ran " + tests.size() + " and hit " + fails.size() + " errors");
             for (Test test : fails) {
+                System.out.println("----");
                 System.out.println(test.name + ": " + test.message());
             }
         }
