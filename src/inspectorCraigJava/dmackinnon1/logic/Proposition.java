@@ -4,7 +4,6 @@ import java.util.Collection;
 /**
  * A Proposition models a simple proposition: "Socrates is mortal"
  * or "A is guilty".
- * A proposition can be negated.
  */
 
 public class Proposition implements Phrase {
@@ -21,10 +20,12 @@ public class Proposition implements Phrase {
         this.sign = sign;
     }
 
+    @Override
     public void addTo(Collection<Phrase> list) {
         list.add(this);
     }
 
+    @Override
     public int hashCode(){
         int hash = 0;
         if (sign) {
@@ -33,10 +34,12 @@ public class Proposition implements Phrase {
         return (hash + symbol.hashCode()*100);
     }
 
+    @Override
     public String toString(){
        return "\"" + internalToString() +"\"";
     }
 
+    @Override
     public String internalToString(){
         String toString = "";
         if (!this.sign){
@@ -46,10 +49,12 @@ public class Proposition implements Phrase {
         return toString;
     }
 
+    @Override
     public Proposition clone(){
         return new Proposition(this.symbol, this.sign);
     }
 
+    @Override
     public boolean equals(Object o){
         if (o instanceof Proposition){
             Proposition c = (Proposition) o;
@@ -59,21 +64,25 @@ public class Proposition implements Phrase {
         }
     }
 
+    @Override
     public Proposition negate() {
         Proposition n = this.clone();
         n.sign = !n.sign;
         return n;
     }
 
+    @Override
     public boolean satisfies(Phrase phrase){
         return this.equals(phrase);
     }
 
+    @Override
     public Phrase resolve(Phrase phrase){
         if (this.satisfies(phrase)) return this;
         return null;
     }
 
+    @Override
     public Phrase bind(String a, String x){
         Proposition p =  this.clone();
         if (this.symbol.equals(x)){

@@ -15,21 +15,24 @@ public class Implication implements Phrase {
         this.consequent = cons;
     }
 
+    @Override
     public Implication clone(){
         return new Implication(this.antecedent, this.consequent);
     }
 
+    @Override
     public String toString() {
         return "\"" + internalToString() + "\"";
     }
 
+    @Override
     public String internalToString(){
         String toString = "(" + this.antecedent.internalToString();
         toString += " -> ";
         toString += this.consequent.internalToString() + ")";
         return toString;
     }
-
+    @Override
     public int hashCode(){
         return 10000*this.antecedent.hashCode() + this.consequent.hashCode();
     }
@@ -86,6 +89,7 @@ public class Implication implements Phrase {
         return new Union(this.antecedent.negate(), this.consequent);
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o instanceof Implication ){
             Implication i = (Implication) o;
@@ -98,7 +102,7 @@ public class Implication implements Phrase {
         }
     }
 
-
+    @Override
     public Phrase negate() {
         return this.asUnion().negate();
     }
@@ -107,6 +111,8 @@ public class Implication implements Phrase {
     public void addTo(Collection<Phrase> list) {
         list.add(this);
     }
+
+    @Override
     public Phrase bind(String a, String x) {
         return new Implication(this.antecedent.bind(a,x), this.consequent.bind(a,x));
     }

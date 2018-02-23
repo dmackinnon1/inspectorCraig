@@ -24,17 +24,11 @@ public class Solver {
     public Set<Phrase> inputPhrases ;
     public Set<Phrase> inputSatisfiers;
     public List<Proposition> props;
-    public Solver parent = null;
     public Phrase phraseWithContradiction = null;
 
     public Solver(){
         this.inputPhrases = new HashSet<>();
         this.inputSatisfiers = new HashSet<>();
-        this.parent = this;
-    }
-
-    protected void setParentOnChild(Solver solver) {
-        solver.parent = this.parent;
     }
 
     public Solver(List<Proposition> props, Collection<Phrase> ip, Collection<Phrase> is){
@@ -108,15 +102,6 @@ public class Solver {
         }
     }
 
-    protected void addExcludedMiddles(){
-        for (Proposition p :this.props){
-            Union u = new Union(p,p.negate());
-            if (!this.inputSatisfiers.contains(u)){
-                this.inputSatisfiers.add(u);
-            }
-        }
-    }
-
     public void traverse(){
         Set<Phrase> newPhrases = new HashSet<>();
         Set<Phrase> removable = new HashSet<>();
@@ -136,12 +121,6 @@ public class Solver {
             if (s instanceof Intersection) {
                 s.addTo(newPhrases);
             }
-            //special implicationcase
-
-            if (s instanceof Implication) {
-               // traversImplication((Implication)s, newPhrases);
-            }
-
         }
         this.inputSatisfiers.removeAll(removable);
         this.inputPhrases.addAll(newPhrases);
@@ -227,7 +206,6 @@ public class Solver {
     public boolean isConsistent(){
         Set<Phrase> others;
         if (phraseWithContradiction != null) {
-            //System.out.println("contradiction in " + this.toString() +": " + phraseWithContradiction);
             return false;
 
         }

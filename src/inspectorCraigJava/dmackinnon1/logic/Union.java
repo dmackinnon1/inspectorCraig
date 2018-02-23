@@ -29,10 +29,12 @@ public class Union implements Phrase {
         return this;
     }
 
+    @Override
     public int hashCode() {
         return this.phrases.hashCode()*1000;
     }
 
+    @Override
     public void addTo(Collection<Phrase> list){
         if (this.phrases.size() == 1){
             list.add(this.phrases.get(0));
@@ -46,22 +48,19 @@ public class Union implements Phrase {
         this.phrases = new ArrayList<Phrase>();
     }
 
+    @Override
     public boolean satisfies(Phrase p) {
-        if (p instanceof Proposition){
-            Proposition pp = (Proposition) p;
-            Proposition np = pp.negate();
-            return phrases.contains(np);
-        } else {
-            return false; // for now, a Union can only satisfy a Proposition
-        }
+        return phrases.contains(p.negate());
     }
 
+    @Override
     public Union clone() {
         Union n = new Union();
         n.phrases.addAll(this.phrases);
         return n;
     }
 
+    @Override
     public Phrase resolve(Phrase p){
         if (satisfies(p)){
             Union n = this.clone();
@@ -77,10 +76,12 @@ public class Union implements Phrase {
         }
     }
 
+    @Override
     public String toString(){
         return "\"" + internalToString() +"\"";
     }
 
+    @Override
     public String internalToString() {
         return "[" + phrasesString() + "]";
     }
@@ -98,6 +99,7 @@ public class Union implements Phrase {
         return pString;
     }
 
+    @Override
     public boolean equals(Object other) {
         if (other instanceof Union){
             Union u = (Union) other;
@@ -109,6 +111,7 @@ public class Union implements Phrase {
     /*
      * Negation of a Union follows DeMorgan's law
      */
+    @Override
     public Phrase negate() {
         List<Phrase> negated = new ArrayList<Phrase>();
         for (Phrase p:this.phrases) {
@@ -117,6 +120,7 @@ public class Union implements Phrase {
         return new Intersection(negated.toArray(new Phrase[negated.size()]));
     }
 
+    @Override
     public Phrase bind(String a, String x) {
         List<Phrase> bound = new ArrayList<Phrase>();
         for (Phrase p : this.phrases) {
