@@ -21,7 +21,7 @@ function formatPuzzle(pc) {
 	let ld = display.latexDisplay;
 	pt.innerHTML = pc.puzzleTitle()
 	pd.innerHTML = pc.cluesDisplay();
-	//ld.innerHTML = pc.cluesLatex();
+	ld.innerHTML = pc.cluesLatex();
 	dd.innerHTML = pc.doorDisplay();
 	pi.innerHTML = pc.puzzleIntro();
 	let solD = display.solutionDisplay;
@@ -78,6 +78,7 @@ class PuzzleController {
 		this.treasureList = [];
 		this.doorList = ['D1','D2'];
 		this.unknownList = this.doorList;
+		this.clues=[];
 		this.init();
 	}
 	
@@ -86,11 +87,11 @@ class PuzzleController {
 	}
 
 	initInscriptions() {
-		for(var i in this.puzzle.premises){
+		for(var i in this.puzzle.door1_propositions){
 			let parser = new Parser(this.puzzle.door1_propositions[i],this.unknownList);
 			this.clues.push(parser.parse());
 		}
-		for(var i in this.puzzle.premises){
+		for(var i in this.puzzle.door2_propositions){
 			let parser = new Parser(this.puzzle.door2_propositions[i],this.unknownList);
 			this.clues.push(parser.parse());
 		}

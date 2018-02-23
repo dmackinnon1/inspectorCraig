@@ -164,13 +164,19 @@ class Union {
 	latex() {
 		let d = "";
 		let first = true;
+		let containsProps = true;
 		for (var i in this.propositions){
-				if (!first) {
-					d += "\\vee ";
-				}
-				first = false;
-				d += this.propositions[i].latex();
+			containsProps = this.propositions[i].isProposition();				
+			if (!first) {
+				d += "\\vee ";
 			}
+			first = false;
+			if (containsProps) {
+				d += this.propositions[i].latex();
+			} else {
+				d += "(" + this.propositions[i].latex() + ")";
+			}
+		}
 		return d;
 	}
 
@@ -220,13 +226,20 @@ class Intersection {
 	latex() {
 		let d = "";
 		let first = true;
+		let containsProps = true;
 		for (var i in this.propositions){
-				if (!first) {
-					d += "\\wedge ";
-				}
-				first = false;
-				d += this.propositions[i].latex();
+			containsProps = this.propositions[i].isProposition();							
+			if (!first) {
+				d += "\\wedge ";
 			}
+			first = false;
+			if (containsProps) {
+				d += this.propositions[i].latex();
+			} else {
+				d += "(" + this.propositions[i].latex() + ")";
+			}
+		}
+			
 		return d;
 	}
 	
@@ -274,7 +287,8 @@ class Parser {
 		this.stack = [];
 		this.tokenIndex = 0;
 		this.isImplication = false;
-		this.implication = null;	
+		this.implication = null;
+		this.propSize = propositions[0].length;	
 	}
 	parse() {
 		this.tokenize();
@@ -404,11 +418,20 @@ class Parser {
 	tokenize() {
 		let ignoreCount = 0;		
 		for(var i = 0; i < this.input.length; i++) {
+			let propSkip = 0;
 			if (ignoreCount > 0){
 				ignoreCount --;
 				continue;
 			}
-			let current = this.input[i];		
+			let current = this.input[i];
+			let larger = current;
+			if (this.propSize > 1){
+				for (var j = 1; j< this.propSize; j++) {
+					propSkip ++;
+					let peek0 = this.input[i +j]
+					larger += peek0;
+				}
+			}		
 			if (current === ' '|| current === ',' || current === '(' || current === ')'){
 				continue; //skip
 			} else if (current == '[' ) {
@@ -419,8 +442,6 @@ class Parser {
 				this.tokens.push(Token.beginIntersection());
 			} else if ( current === '>') {
 				this.tokens.push(Token.endIntersection())
-			} else if (this.propositions.includes(current)) {
-				this.tokens.push(new Token(current, 'proposition'));
 			} else if (current === '-') {
 				if (i < this.input.length -1) {
 					let peek1 = this.input[i+1];
@@ -431,8 +452,10 @@ class Parser {
 						this.tokens.push(Token.negation());	
 					}
 				}
-			}
-			else {
+			} else if (this.propositions.includes(larger)) {
+				this.tokens.push(new Token(larger, 'proposition'));
+				ignoreCount += propSkip;
+			} else {
 				this.tokens.push(Token.error(current));
 			}
 			//console.log("processing " + current +", tokens: " +this.tokens);
