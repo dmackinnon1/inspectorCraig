@@ -106,8 +106,13 @@ public class Door {
             } else if ( !pa.sign && !pb.sign) {
                 clue += "at least one room has a tiger";
             } else {
-                clue = simplePropTranslation(pa, clue);
-                clue +=" or " + simplePropTranslation(pb,"");
+                if (pa.sign) {
+                    clue = simplePropTranslation(pa, clue);
+                    clue += " or " + simplePropTranslation(pb, "");
+                } else {
+                    clue = simplePropTranslation(pb, clue);
+                    clue += " or " + simplePropTranslation(pa, "");
+                }
             }
             return clue;
         }
@@ -121,7 +126,7 @@ public class Door {
                 clue += "both rooms have treasure or both rooms have a tiger";
             }
             if (mixedInIntersection(ia) && mixedInIntersection(ib)){
-                clue += "one room has the treasure and the other has a tiger";
+                clue += "one room has treasure and the other has a tiger";
             }
             return clue;
         }
@@ -151,8 +156,13 @@ public class Door {
             } else if ( !pa.sign && !pb.sign) {
                 clue += "both rooms have a tiger";
             } else {
-                clue = simplePropTranslation(pa, clue);
-                clue +=" and " + simplePropTranslation(pb,"");
+                if (pa.sign) {
+                    clue = simplePropTranslation(pa, clue);
+                    clue += " and " + simplePropTranslation(pb, "");
+                } else {
+                    clue = simplePropTranslation(pb, clue);
+                    clue += " and " + simplePropTranslation(pa, "");
+                }
             }
             return clue;
         }

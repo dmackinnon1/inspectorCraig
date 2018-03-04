@@ -7,7 +7,6 @@ import java.util.Collection;
 
 /**
  * Models the union of two (or more) propositions A union B.
- * Todo handle union of more complex propositions
  */
 
 public class Union implements Phrase {
@@ -64,8 +63,7 @@ public class Union implements Phrase {
     public Phrase resolve(Phrase p){
         if (satisfies(p)){
             Union n = this.clone();
-            Proposition pp = (Proposition) p;
-            n.phrases.remove(pp.negate());
+            n.phrases.remove(p.negate());
             if (n.phrases.size()==1){
                 return n.phrases.get(0);
             } else {
