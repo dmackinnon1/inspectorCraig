@@ -74,6 +74,28 @@ public class Problem {
         return solution;
     }
 
+    public String shortSolution(){
+        if (!solver.isConsistent()){return "inconsistent";}
+        String solution ="";
+        if (solver.inputPhrases.contains(door1.prop)) {
+            solution += "treasure-";
+        } else if (solver.inputPhrases.contains(door1.prop.negate())) {
+            solution += "tiger-";
+        } else {
+            solution += "unknown-";
+        }
+        solution += " ";
+        if (solver.inputPhrases.contains(door2.prop)) {
+            solution += "treasure";
+        } else if (solver.inputPhrases.contains(door2.prop.negate())) {
+            solution += "tiger";
+        } else {
+            solution += "unknown";
+        }
+        return solution;
+
+    }
+
     public String toJson(){
         String json = "{";
         json += "\"door1_clue\": \"" + this.door1.translation() +"\"";

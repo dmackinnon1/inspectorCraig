@@ -89,7 +89,8 @@ public class Generator {
                         doorText.indexOf(door1.translation()),
                         doorText.indexOf(door2.translation()),
                         treasureCount, tigerCount,
-                        problem.solver.isConsistent());
+                        problem.solver.isConsistent(),
+                        problem.shortSolution());
                 descriptors.add(d.toString());
             }
         }

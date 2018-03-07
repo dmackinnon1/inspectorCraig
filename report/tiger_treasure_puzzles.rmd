@@ -27,6 +27,8 @@ print(inscriptions)
 
 ## Which Puzzles are Free of Contradictions?
 
+Some combinations of statements on the doors will lead to contradictions.
+
 ```{r}
 door1 <- 1:14
 door2 <- 1:14
@@ -35,10 +37,12 @@ HasSol  <- matrix(rep(0, 196), nrow=14, ncol=14)
 for (j in 1:196){
   HasSol[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] <- as.numeric(TigerTreasure[j,]$consistent == " true")
 }
-image(x=door1, y=door2, HasSol, col=grey.colors(2, start=1, end=0), main='puzzles with solutions')
+image(x=door1, y=door2, HasSol, col=grey.colors(2, start=1, end=0), main='puzzles with no contradictions')
 ```
 
 ## Which Puzzles are Free of Contradictions, but Cannot be Solved?
+
+Some puzzles are contradiction free, but for which no solutions can be found.
 
 ```{r}
 NoKnowns  <- matrix(rep(0, 196), nrow=14, ncol=14)
@@ -51,8 +55,9 @@ for (j in 1:196){
 }  
 image(x=door1, y=door2, NoKnowns, col=grey.colors(2, start=1, end=0), main='puzzles that lead nowhere')
 ```
-
 ## Which Puzzles have Two Tigers?
+
+Some puzzles have two tigers, two treasures, or one tiger and one treasure. 
 
 ```{r}
 Tigers2  <- matrix(rep(0, 196), nrow=14, ncol=14)
@@ -96,6 +101,8 @@ image(x=door1, y=door2, OneEach, col=grey.colors(2, start=1, end=0), main='puzzl
 ```
 
 ## Puzzles with one door left uknown
+In some puzzles, we can't deduce what is behind one of the doors.
+
 ```{r}
 OneUnknown  <- matrix(rep(0, 196), nrow=14, ncol=14)
 for (j in 1:196){
@@ -106,4 +113,157 @@ for (j in 1:196){
   OneUnknown[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] <- as.numeric(tcount == 1)
 }  
 image(x=door1, y=door2, OneUnknown, col=grey.colors(2, start=1, end=0), main='one door uncertain')
+```
+
+## Symmetric graphs
+
+For each statement in the list of fourteen, you can find the negation of that statement in the list - for example, statement 1 "this room has treasure" has its negation in statement 5 "this room has a tiger." If we plot the list of statements on door 1 vs. the the list of statements on door 2, but re-arrange the statements on the door 2 axis so they are the negations of our original list (the negated list would be statements 5, 6, 8, 7, 1 ,2, 4, 3, 12, 11, 10, 9, 14, 13), we can see the symmetry in these puzzles more clearly.
+
+### Contradiction Free Puzzles, displayed symmetrically
+```{r}
+#no solutions
+neg <- c(5,6,8,7,1,2,4,3,12,11,10,9,14,13)
+SymHasSol  <- matrix(rep(0, 196), nrow=14, ncol=14)
+for (j in 1:196){
+  SymHasSol[(TigerTreasure[j,]$door_1 + 1),neg[(TigerTreasure[j,]$door_2 + 1)]] <- as.numeric(TigerTreasure[j,]$consistent == " true")
+}
+image(x=door1, y=door2, SymHasSol, col=grey.colors(2, start=1, end=0), main='puzzles with no contradictions  ')
+```
+
+
+### Puzzles with two tigers, displayed symmetrically
+
+```{r}
+SymTigers2  <- matrix(rep(0, 196), nrow=14, ncol=14)
+for (j in 1:196){
+  tcount <- TigerTreasure[j,]$tiger_count 
+  if ( HasSol[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] == 0) {
+    tcount <- 0
+  }
+  SymTigers2[(TigerTreasure[j,]$door_1 + 1),(neg[TigerTreasure[j,]$door_2 + 1])] <- as.numeric(tcount == 2)
+}  
+image(x=door1, y=door2, SymTigers2, col=grey.colors(10, start=1, end=0),main='puzzles with two tigers')
+```
+
+
+### Puzzles with two treasures, displayed symmetrically
+```{r}
+SymTreasures2  <- matrix(rep(0, 196), nrow=14, ncol=14)
+for (j in 1:196){
+  tcount <- TigerTreasure[j,]$treasure_count 
+  if ( HasSol[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] == 0) {
+    tcount <- 0
+  }
+  SymTreasures2[(TigerTreasure[j,]$door_1 + 1),neg[(TigerTreasure[j,]$door_2 + 1)]] <- as.numeric(tcount == 2)
+}  
+image(x=door1, y=door2, SymTreasures2, col=grey.colors(2, start=1, end=0), main='puzzles with two treasures')
+```
+
+### Puzzles with both a Tiger and Treasure, displayed symmetrically
+```{r}
+SymOneEach  <- matrix(rep(0, 196), nrow=14, ncol=14)
+for (j in 1:196){
+  treasure <- TigerTreasure[j,]$treasure_count 
+  tigers <- TigerTreasure[j,]$tiger_count
+  if ( HasSol[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] == 0) {
+    treasure <- 0
+    tigers <- 0
+  }
+  SymOneEach[(TigerTreasure[j,]$door_1 + 1),(neg[TigerTreasure[j,]$door_2 + 1])] <- as.numeric(treasure == 1 && tigers == 1)
+}  
+image(x=door1, y=door2, SymOneEach, col=grey.colors(2, start=1, end=0), main='puzzles with both tiger and treasure')
+```
+
+### Puzzles we are including: no contradiction, and at least one solution
+```{r}
+SymAll  <- matrix(rep(0, 196), nrow=14, ncol=14)
+for (j in 1:196){
+  tcount <- TigerTreasure[j,]$tiger_count + TigerTreasure[j,]$treasure_count
+  
+  if ( HasSol[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] == 0) {
+    tcount <- 0
+  }
+  
+  SymAll[(TigerTreasure[j,]$door_1 + 1),(neg[TigerTreasure[j,]$door_2 + 1])] <- as.numeric(tcount != 0)
+}  
+image(x=door1, y=door2, SymAll, col=grey.colors(2, start=1, end=0), main='puzzles we are including')
+```
+```{r}
+AllPuzzles  <- matrix(rep(0, 196), nrow=14, ncol=14)
+for (j in 1:196){
+  tcount <- TigerTreasure[j,]$tiger_count + TigerTreasure[j,]$treasure_count
+  
+  if ( HasSol[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] == 0) {
+    tcount <- 0
+  }
+  
+  AllPuzzles[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] <- as.numeric(tcount != 0)
+}  
+image(x=door1, y=door2, AllPuzzles, col=grey.colors(2, start=1, end=0), main='puzzles we are including')
+```
+
+```{r}
+ReflectPuzzles  <- matrix(rep(0, 196), nrow=14, ncol=14)
+for (i in 1:14){
+  for (j in 1:14){
+    ReflectPuzzles[i,j] <- AllPuzzles[i,j]
+    if (AllPuzzles[i,j] == 1 && AllPuzzles[j,i] == 1){
+      ReflectPuzzles[i,j] <- 2
+    }
+  }
+}
+  
+image(x=door1, y=door2, ReflectPuzzles, col=grey.colors(3, start=1, end=0), main='puzzles whose reflections are puzzles')
+```
+```{r}
+NoReflectPuzzles  <- matrix(rep(0, 196), nrow=14, ncol=14)
+for (i in 1:14){
+  for (j in 1:14){
+    NoReflectPuzzles[i,j] <- AllPuzzles[i,j]
+    if (AllPuzzles[i,j] == 1 && HasSol[j,i] == 0){
+      NoReflectPuzzles[i,j] <- 2
+    }
+  }
+}
+  
+image(x=door1, y=door2, NoReflectPuzzles, col=grey.colors(3, start=1, end=0), main='puzzles whose reflections have no solution')
+```
+
+```{r}
+Solutions  <- matrix(rep(0, 196), nrow=14, ncol=14)
+SymSol<- matrix(rep(0, 196), nrow=14, ncol=14)
+for (j in 1:196){
+  Solutions[(TigerTreasure[j,]$door_1 + 1),(TigerTreasure[j,]$door_2 + 1)] <- TigerTreasure[j,]$solution
+}  
+for (i in 1:14){
+  for (j in 1:14){
+    SymSol[i,j] <-(Solutions[i,j] == Solutions[j,i])
+  }
+}
+```
+
+```{r}
+for (i in 1:14){
+  for (j in 1:14){
+    if (ReflectPuzzles[i,j] >1  && SymSol[i,j]){
+      ReflectPuzzles[i,j] <-3
+    }
+  }
+}
+  
+image(x=door1, y=door2, ReflectPuzzles, col=grey.colors(4, start=1, end=0), main='puzzles whose reflections have the same solution')
+```
+
+```{r}
+NoSolReflect<- matrix(rep(0, 196), nrow=14, ncol=14)
+for (i in 1:14){
+  for (j in 1:14){
+    if (NoReflectPuzzles[i,j] == 2){
+      NoSolReflect[i,j] <-1
+    } else{
+      NoSolReflect[i,j] <-0
+    }
+  }
+}
+sum(NoSolReflect)
 ```
