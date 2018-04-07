@@ -106,20 +106,22 @@ public class Implication implements Phrase {
     public Phrase negate() {
         return this.asUnion().negate();
     }
-
+    /*
+     * Note that if an implication is in the form of
+     * A -> not A, then we can immediately infer not A.
+     */
     @Override
     public void addTo(Collection<Phrase> list) {
-        list.add(this);
+        if (this.antecedent.equals(this.consequent.negate())) {
+            list.add(this.consequent);
+        } else {
+            list.add(this);
+        }
     }
 
     @Override
     public Phrase bind(String a, String x) {
         return new Implication(this.antecedent.bind(a,x), this.consequent.bind(a,x));
-    }
-
-    @Override
-    public boolean isContradictory() {
-        return this.antecedent.equals(this.consequent.negate());
     }
 
 }

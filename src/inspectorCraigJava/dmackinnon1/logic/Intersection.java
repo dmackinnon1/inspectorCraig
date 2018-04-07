@@ -111,15 +111,4 @@ public class Intersection implements Phrase {
         return phrases;
     }
 
-    @Override
-    public boolean isContradictory() {
-        for (Phrase p : this.phrases){
-           for (Phrase q: this.phrases){
-               if (p.equals(q.negate())){
-                   return true;
-               }
-           }
-        }
-        return false;
-    }
 }

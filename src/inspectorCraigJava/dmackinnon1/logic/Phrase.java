@@ -18,7 +18,4 @@ public interface Phrase {
     Phrase resolve(Phrase phrase);
 
     Phrase bind(String a, String x);
-
-    boolean isContradictory();
-
 }

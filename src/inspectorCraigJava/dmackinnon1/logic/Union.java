@@ -131,8 +131,4 @@ public class Union implements Phrase {
         return phrases;
     }
 
-    @Override
-    public boolean isContradictory() {
-        return false;
-    }
 }

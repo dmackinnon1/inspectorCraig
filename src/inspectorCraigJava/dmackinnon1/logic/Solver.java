@@ -62,6 +62,11 @@ public class Solver {
         return this;
     }
 
+    /*
+    * The main actions in the solver are to 1. traverse
+    * all of the phrases applying composition laws, emitting new phrases, and
+    * 2. separate out any new propositions that have been emitted.
+    */
     public void separate(){
         Set<Phrase> newPhrases = new HashSet<>();
         for (Phrase p: this.inputPhrases){
@@ -81,7 +86,12 @@ public class Solver {
         this.inputSatisfiers = satisfiers;
     }
 
-
+    /*
+    * One method of resolving is to consider each proposition and assume
+    * first that it is true, and then that it is false. If one of these
+    * leads to a contradiction, then its negation is true.
+    * This is the law of the excluded middle.
+    */
     protected boolean checkForContradictions(Proposition p){
        Solver c = this.clone();
        c.inputPhrases.add(p);
@@ -102,6 +112,10 @@ public class Solver {
         }
     }
 
+    /*
+    *  While solving we first traverse the phrases, composing them to see
+    *  if new phrases get generated.
+    */
     public void traverse(){
         Set<Phrase> newPhrases = new HashSet<>();
         Set<Phrase> removable = new HashSet<>();
@@ -124,11 +138,6 @@ public class Solver {
         }
         this.inputSatisfiers.removeAll(removable);
         this.inputPhrases.addAll(newPhrases);
-        for (Phrase p: newPhrases){
-            if (p.isContradictory()){
-                this.phraseWithContradiction = p;
-            }
-        }
         this.separate();
     }
 
