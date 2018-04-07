@@ -8,16 +8,16 @@ import dmackinnon1.logic.Proposition;
 import dmackinnon1.test.TestSet1;
 import dmackinnon1.test.TestSet2;
 import dmackinnon1.test.TestSet3;
-import dmackinnon1.tiger.Descriptor;
+import dmackinnon1.test.TestSet4;
 import dmackinnon1.tiger.Door;
 import dmackinnon1.tiger.Generator;
 
-import java.util.List;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.Files;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Entry point for generating json files containing puzzle descriptions.
@@ -36,6 +36,7 @@ public class PuzzleWriter {
             TestSet1.main(null);
             TestSet2.main(null);
             TestSet3.main(null);
+            TestSet4.main(null);
         } else if (input.length > 0 && input[0].trim().equals("report")){
             System.out.println("writing out tiger/treasure inscriptions...");
             Path file = Paths.get(System.getProperty("user.dir"), FILENAME_TIGER_INSCRIPTIONS);

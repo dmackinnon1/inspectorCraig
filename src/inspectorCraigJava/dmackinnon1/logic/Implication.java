@@ -79,7 +79,7 @@ public class Implication implements Phrase {
             }
         }
         if (satisfies(p)) return this.consequent;
-        return null;
+        return this;
     }
 
     /*
@@ -115,6 +115,11 @@ public class Implication implements Phrase {
     @Override
     public Phrase bind(String a, String x) {
         return new Implication(this.antecedent.bind(a,x), this.consequent.bind(a,x));
+    }
+
+    @Override
+    public boolean isContradictory() {
+        return this.antecedent.equals(this.consequent.negate());
     }
 
 }

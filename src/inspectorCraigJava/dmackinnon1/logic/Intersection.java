@@ -93,8 +93,9 @@ public class Intersection implements Phrase {
 
     @Override
     public Phrase resolve(Phrase phrase){
-        if (satisfies(phrase)) return this;
-        return null;
+        //if (satisfies(phrase)) return this;
+        //return null;
+        return this;
     }
 
     @Override
@@ -108,5 +109,17 @@ public class Intersection implements Phrase {
 
     public List<Phrase>  getPhrases(){
         return phrases;
+    }
+
+    @Override
+    public boolean isContradictory() {
+        for (Phrase p : this.phrases){
+           for (Phrase q: this.phrases){
+               if (p.equals(q.negate())){
+                   return true;
+               }
+           }
+        }
+        return false;
     }
 }

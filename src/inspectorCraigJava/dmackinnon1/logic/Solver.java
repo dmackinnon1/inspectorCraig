@@ -86,7 +86,7 @@ public class Solver {
        Solver c = this.clone();
        c.inputPhrases.add(p);
        c.evaluate();
-       if (!c.isConsistent()){
+       if (!c.isConsistent()) {
            addPhrase(p.negate());
            return true;
        }
@@ -124,6 +124,11 @@ public class Solver {
         }
         this.inputSatisfiers.removeAll(removable);
         this.inputPhrases.addAll(newPhrases);
+        for (Phrase p: newPhrases){
+            if (p.isContradictory()){
+                this.phraseWithContradiction = p;
+            }
+        }
         this.separate();
     }
 
@@ -207,8 +212,8 @@ public class Solver {
         Set<Phrase> others;
         if (phraseWithContradiction != null) {
             return false;
-
         }
+
         for (Phrase p: this.inputPhrases){
             if (p instanceof Proposition) {
                 others = new HashSet<>(this.inputPhrases);

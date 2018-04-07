@@ -90,4 +90,9 @@ public class Proposition implements Phrase {
         }
         return p;
     }
+
+    @Override
+    public boolean isContradictory() {
+        return false;
+    }
 }

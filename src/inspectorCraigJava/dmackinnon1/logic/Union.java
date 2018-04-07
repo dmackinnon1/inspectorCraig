@@ -70,7 +70,7 @@ public class Union implements Phrase {
                 return n;
             }
         } else {
-            return null;
+            return this;
         }
     }
 
@@ -129,5 +129,10 @@ public class Union implements Phrase {
 
     public List<Phrase>  getPhrases(){
         return phrases;
+    }
+
+    @Override
+    public boolean isContradictory() {
+        return false;
     }
 }
