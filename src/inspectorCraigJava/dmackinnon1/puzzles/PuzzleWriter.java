@@ -30,6 +30,7 @@ public class PuzzleWriter {
     public static String FILEMAME_TIGER_PUZZLES = "data/tiger.json";
     public static String FILENAME_TIGER_INSCRIPTIONS = "report/inscriptions.csv";
     public static String FILENAME_TIGER_REPORT = "report/tiger_report.csv";
+    public static String FILENAME_DREAMER_PUZZLES = "data/dreamers.json";
 
     public static void main(String[] input) throws Exception {
         if (input.length > 0 && input[0].trim().equals("test")) {
@@ -60,6 +61,11 @@ public class PuzzleWriter {
             System.out.println("generating tiger & treasure problems...");
             file = Paths.get(System.getProperty("user.dir"), FILEMAME_TIGER_PUZZLES);
             jsons = tigerProblems();
+            Files.write(file, jsons, Charset.forName("UTF-8"));
+
+            System.out.println("generating isle of dreams problems...");
+            file = Paths.get(System.getProperty("user.dir"), FILENAME_DREAMER_PUZZLES);
+            jsons = dreamerProblems();
             Files.write(file, jsons, Charset.forName("UTF-8"));
         }
     }
@@ -125,6 +131,24 @@ public class PuzzleWriter {
         return s;
     }
 
+    public static List<String> dreamerProblems(){
+        dmackinnon1.dreamers.Generator g = new dmackinnon1.dreamers.Generator();
+        List<dmackinnon1.dreamers.Problem> problems = g.generate();
+        List<String> s = new ArrayList<>();
+        s.add("[");
+        int count = 0;
+        for (dmackinnon1.dreamers.Problem p : problems) {
+            if (count < problems.size() - 1) {
+                s.add("\t" + p.toJson() + ",");
+            } else {
+                s.add("\t" + p.toJson());
+            }
+            count++;
+        }
+        s.add("]");
+        System.out.println("problems generated: " + count);
+        return s;
+    }
     public static List<String> tigerInscriptions() {
         Generator g = new Generator();
         Proposition door1Prop = new Proposition("D1");
