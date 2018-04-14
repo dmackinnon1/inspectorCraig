@@ -4,18 +4,18 @@ import dmackinnon1.logic.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Generator {
+public class DreamersGenerator implements Generator{
 
     static Dreamer dreamerA = new Dreamer("A");
     static Dreamer dreamerB = new Dreamer("B");
 
-    public List<Problem> generate() {
+    public List<PuzzleJSON> generate() {
         Phrase[] aList = {dreamerA.isAwake(), dreamerA.isAwake().negate(),
                 dreamerA.isDiurnal(), dreamerA.isDiurnal().negate()};
         Phrase[] bList = {dreamerB.isAwake(), dreamerB.isAwake().negate(),
                 dreamerB.isDiurnal(), dreamerB.isDiurnal().negate()};
 
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         int count = 0;
         for (Phrase a1 : aList) {
             for (Phrase b1 : bList) {
@@ -37,10 +37,10 @@ public class Generator {
     }
 
     public static void main(String[] args){
-        Generator g = new Generator();
-        List<Problem> probs = g.generate();
-        for(Problem p: probs){
-            System.out.println(p.toJson());
+        DreamersGenerator g = new DreamersGenerator();
+        List<PuzzleJSON> probs = g.generate();
+        for(PuzzleJSON p: probs){
+            System.out.println(p.toJSON());
         }
     }
 }

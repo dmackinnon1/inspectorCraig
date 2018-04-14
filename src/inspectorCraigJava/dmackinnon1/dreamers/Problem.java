@@ -3,7 +3,7 @@ import dmackinnon1.logic.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Problem {
+public class Problem implements PuzzleJSON{
 
     Dreamer dreamerA;
     Dreamer dreamerB;
@@ -41,7 +41,7 @@ public class Problem {
     }
 
     private String phrase1(Proposition a1){
-        boolean isNegative = a1.sign;
+        boolean isNegative = !a1.sign;
         if (a1.symbol.contains("a")){
             if (isNegative) {
                 return "I am asleep.";
@@ -58,7 +58,7 @@ public class Problem {
     }
 
     private String phrase2(Proposition a2, Dreamer other){
-        boolean isNegative = a2.sign;
+        boolean isNegative = !a2.sign;
         if (a2.symbol.contains("a")){
             if (isNegative) {
                 return other.dreamer + " is asleep.";
@@ -133,7 +133,7 @@ public class Problem {
     }
      */
 
-    public String toJson(){
+    public String toJSON(){
         String json = "{";
         json += "\"description\": \"" + this.getDescription() +"\"";
         json += ", \"is_consistent\": \"" + this.isConsistent() +"\"";

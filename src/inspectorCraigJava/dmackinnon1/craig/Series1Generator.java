@@ -4,6 +4,7 @@ package dmackinnon1.craig;
 import dmackinnon1.logic.Implication;
 import dmackinnon1.logic.Proposition;
 import dmackinnon1.logic.Solver;
+import dmackinnon1.logic.PuzzleJSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,8 @@ public class Series1Generator extends BaseGenerator {
         super(propSize);
     }
 
-    public List<Problem> generateAll() {
-        List<Problem> problems = generate11();
+    public List<PuzzleJSON> generate() {
+        List<PuzzleJSON> problems = generate11();
         problems.addAll(generate12());
         problems.addAll(generate13());
         problems.addAll(generate14());
@@ -27,16 +28,16 @@ public class Series1Generator extends BaseGenerator {
     A-> C
 
      */
-    public List<Problem> generate11() {
+    public List<PuzzleJSON> generate11() {
         String description = "110";
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         int counter = 1;
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(q);
                 remain2.remove(p);
@@ -67,16 +68,16 @@ public class Series1Generator extends BaseGenerator {
     !A->C
     ⇒ !ABC
      */
-    public List<Problem> generate12() {
+    public List<PuzzleJSON> generate12() {
         String description = "120";
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         int counter = 1;
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(q);
                 remain2.remove(p);
@@ -102,16 +103,16 @@ public class Series1Generator extends BaseGenerator {
     C -> B
     !B
      */
-    public List<Problem> generate13() {
+    public List<PuzzleJSON> generate13() {
         String description = "130";
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         int counter = 1;
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(q);
                 remain2.remove(p);
@@ -138,16 +139,16 @@ public class Series1Generator extends BaseGenerator {
    !B
    !C->!A
     */
-    public List<Problem> generate14() {
+    public List<PuzzleJSON> generate14() {
         String description = "140";
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         int counter = 1;
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(q);
                 remain2.remove(p);

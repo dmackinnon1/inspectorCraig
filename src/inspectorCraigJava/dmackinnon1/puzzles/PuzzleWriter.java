@@ -1,17 +1,11 @@
 package dmackinnon1.puzzles;
-import dmackinnon1.craig.BaseGenerator;
-import dmackinnon1.craig.Problem;
-import dmackinnon1.craig.Series1Generator;
-import dmackinnon1.craig.Series7Generator;
-import dmackinnon1.logic.Phrase;
-import dmackinnon1.logic.Proposition;
-import dmackinnon1.test.TestSet1;
-import dmackinnon1.test.TestSet2;
-import dmackinnon1.test.TestSet3;
-import dmackinnon1.test.TestSet4;
-import dmackinnon1.tiger.Door;
-import dmackinnon1.tiger.Generator;
+import dmackinnon1.craig.*;
+import dmackinnon1.logic.*;
+import dmackinnon1.tiger.*;
+import dmackinnon1.dreamers.*;
+import dmackinnon1.test.*;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,13 +15,12 @@ import java.util.List;
 
 /**
  * Entry point for generating json files containing puzzle descriptions.
- * Todo: write a method for generating 4 phrse problems based on Scratchpad#good4Problems
  */
 
 public class PuzzleWriter {
     public static String FILENAME_3_PUZZLES = "data/craig3.json";
     public static String FILENAME_4_PUZZLES = "data/craig4.json";
-    public static String FILEMAME_TIGER_PUZZLES = "data/tiger.json";
+    public static String FILENAME_TIGER_PUZZLES = "data/tiger.json";
     public static String FILENAME_TIGER_INSCRIPTIONS = "report/inscriptions.csv";
     public static String FILENAME_TIGER_REPORT = "report/tiger_report.csv";
     public static String FILENAME_DREAMER_PUZZLES = "data/dreamers.json";
@@ -46,111 +39,60 @@ public class PuzzleWriter {
             System.out.println("writing out tiger/treasure report data...");
             file = Paths.get(System.getProperty("user.dir"), FILENAME_TIGER_REPORT);
             Files.write(file, tigerReportData(), Charset.forName("UTF-8"));
-
         }else {
-            System.out.println("generating 3 phrase problems...");
-            Path file = Paths.get(System.getProperty("user.dir"), FILENAME_3_PUZZLES);
-            List<String> jsons = threePhrasesProblems();
-            Files.write(file, jsons, Charset.forName("UTF-8"));
+            writePuzzleProblems("generating Inspector Craig 3 Suspect puzzles...",
+                    FILENAME_3_PUZZLES, new Craig3SuspectGenerator());
 
-            System.out.println("generating 4 phrase problems... (this may take a while)");
-            file = Paths.get(System.getProperty("user.dir"), FILENAME_4_PUZZLES);
-            jsons = fourPhrasesProblems();
-            Files.write(file, jsons, Charset.forName("UTF-8"));
+            writePuzzleProblems("generating Inspector Craig 4 Suspect puzzles...",
+                    FILENAME_4_PUZZLES, new Craig4SuspectGenerator());
 
-            System.out.println("generating tiger & treasure problems...");
-            file = Paths.get(System.getProperty("user.dir"), FILEMAME_TIGER_PUZZLES);
-            jsons = tigerProblems();
-            Files.write(file, jsons, Charset.forName("UTF-8"));
+            writePuzzleProblems("generating Tiger & Treasure puzzles...",
+                    FILENAME_TIGER_PUZZLES, new TigerGenerator());
 
-            System.out.println("generating isle of dreams problems...");
-            file = Paths.get(System.getProperty("user.dir"), FILENAME_DREAMER_PUZZLES);
-            jsons = dreamerProblems();
-            Files.write(file, jsons, Charset.forName("UTF-8"));
+            writePuzzleProblems("generating Isle of Dreams puzzles...",
+                    FILENAME_DREAMER_PUZZLES, new DreamersGenerator());
         }
     }
 
-    public static List<String> threePhrasesProblems(){
-        Series1Generator g = new Series1Generator(3);
-        Series7Generator g7 = new Series7Generator(3);
-        List<Problem> ps = g.generateAll();
-        ps.addAll(g7.generateAll());
-        List<String> s = new ArrayList<String>();
+    public static void writePuzzleProblems(String message, String filename, Generator generator){
+        System.out.println(message);
+        List<String> jsonArray = jsonArrayAsList(generator.generate());
+        Path file = Paths.get(System.getProperty("user.dir"), filename);
+        try {
+            Files.write(file, jsonArray, Charset.forName("UTF-8"));
+        } catch (IOException ioe){
+            System.out.println("Problem writing to file: "  + file);
+            ioe.printStackTrace();
+        }
+    }
+
+    public static List<String> tigerReportData(){
+        return new TigerGenerator().descriptors();
+    }
+
+    public static List<String> jsonArrayAsList(List<PuzzleJSON> puzzleJSONs){
+        List<String> s = new ArrayList<>();
         s.add("[");
         int count = 0;
-        for (Problem p: ps){
-            if (count < ps.size()-1) {
-                s.add("\t" + p.toJson() + ",");
+        for (PuzzleJSON p: puzzleJSONs){
+            if (count < puzzleJSONs.size()-1) {
+                s.add("\t" + p.toJSON() + ",");
             } else {
-                s.add("\t" + p.toJson());
+                s.add("\t" + p.toJSON());
             }
             count ++;
         }
         s.add("]");
         System.out.println("problems generated: " + count);
         return s;
+
     }
 
-    public static List<String> fourPhrasesProblems(){
-        Series1Generator g = new Series1Generator(4);
-        Series7Generator g7 = new Series7Generator(4);
-        List<Problem> ps = g.generateAll();
-        ps.addAll(g7.generateAll());
-        List<Problem> augmented = BaseGenerator.augmentProblems(ps);
-        List<String> s = new ArrayList<String>();
-        s.add("[");
-        int count = 0;
-        for (Problem p: augmented){
-            if (count < augmented.size()-1) {
-                s.add("\t" + p.toJson() + ",");
-            } else {
-                s.add("\t" + p.toJson());
-            }
-            count ++;
-        }
-        s.add("]");
-        return s;
-    }
-
-    public static List<String> tigerProblems(){
-        Generator g = new Generator();
-        List<dmackinnon1.tiger.Problem> problems = g.generate();
-        List<String> s = new ArrayList<>();
-        s.add("[");
-        int count = 0;
-        for (dmackinnon1.tiger.Problem p : problems) {
-            if (count < problems.size() - 1) {
-                s.add("\t" + p.toJson() + ",");
-            } else {
-                s.add("\t" + p.toJson());
-            }
-            count++;
-        }
-        s.add("]");
-        System.out.println("problems generated: " + count);
-        return s;
-    }
-
-    public static List<String> dreamerProblems(){
-        dmackinnon1.dreamers.Generator g = new dmackinnon1.dreamers.Generator();
-        List<dmackinnon1.dreamers.Problem> problems = g.generate();
-        List<String> s = new ArrayList<>();
-        s.add("[");
-        int count = 0;
-        for (dmackinnon1.dreamers.Problem p : problems) {
-            if (count < problems.size() - 1) {
-                s.add("\t" + p.toJson() + ",");
-            } else {
-                s.add("\t" + p.toJson());
-            }
-            count++;
-        }
-        s.add("]");
-        System.out.println("problems generated: " + count);
-        return s;
-    }
+    /*
+     * Used in data analysis of tiger problems
+     */
     public static List<String> tigerInscriptions() {
-        Generator g = new Generator();
+        TigerGenerator g = new TigerGenerator();
         Proposition door1Prop = new Proposition("D1");
         Proposition door2Prop = new Proposition("D2");
         List<Phrase> phrases = g.phrases(door1Prop, door2Prop);
@@ -162,10 +104,6 @@ public class PuzzleWriter {
             doorText.add(door.translation());
         }
         return doorText;
-    }
-
-    public static List<String> tigerReportData(){
-        return new Generator().descriptors();
     }
 
 }

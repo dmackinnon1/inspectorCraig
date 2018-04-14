@@ -4,7 +4,7 @@ import dmackinnon1.logic.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Generator {
+public class TigerGenerator implements Generator{
 
 
     public List<Phrase> phrases(Proposition a, Proposition b) {
@@ -31,8 +31,8 @@ public class Generator {
     }
 
 
-    public List<Problem> generate() {
-        List<Problem> problems = new ArrayList<>();
+    public List<PuzzleJSON> generate() {
+        List<PuzzleJSON> problems = new ArrayList<>();
         Proposition door1Prop = new Proposition("D1");
         Proposition door2Prop = new Proposition("D2");
         List<Phrase> phrases = phrases(door1Prop, door2Prop);

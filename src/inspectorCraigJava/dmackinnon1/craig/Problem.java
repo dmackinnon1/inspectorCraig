@@ -10,7 +10,7 @@ import java.util.*;
  * conclusion - results of calculating with the premises;
  */
 
-public class Problem {
+public class Problem  implements PuzzleJSON{
 
     List<Proposition> propositions;
     Set<Phrase> premisePhrases = new HashSet<>();
@@ -59,7 +59,7 @@ public class Problem {
         return psList.toString();
     }
 
-    public String toJson(){
+    public String toJSON(){
         String json = "{";
         json += "\"propositions\": " + this.propositions; //json array
         json += ", \"premises\": " + this.premiseStrings(); //json array;
@@ -70,7 +70,7 @@ public class Problem {
     }
 
     public String toString() {
-        return this.toJson();
+        return this.toJSON();
     }
 
 

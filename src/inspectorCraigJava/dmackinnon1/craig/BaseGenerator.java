@@ -3,15 +3,21 @@ package dmackinnon1.craig;
 import dmackinnon1.logic.Proposition;
 import dmackinnon1.logic.Solver;
 import dmackinnon1.logic.Union;
+import dmackinnon1.logic.Generator;
+import dmackinnon1.logic.PuzzleJSON;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BaseGenerator {
+public abstract class BaseGenerator implements Generator {
     protected static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     protected static Random rnd = new Random();
     public List<Proposition> props = new ArrayList<Proposition>();
+
+    public BaseGenerator(){
+        super();
+    }
 
     public BaseGenerator (int propSize) {
         if (propSize > alphabet.length())
@@ -20,6 +26,8 @@ public class BaseGenerator {
             props.add(new Proposition("" + alphabet.charAt(i)));
         }
     }
+
+    public abstract List<PuzzleJSON> generate();
 
     protected Union totalUnion(){
         return new Union(this.props.toArray(new Proposition[this.props.size()]));
@@ -43,26 +51,24 @@ public class BaseGenerator {
         return p;
     }
 
-    public static List<Problem> augmentProblems(List<Problem> ps){
+    public static List<PuzzleJSON> augmentProblems(List<PuzzleJSON> ps){
         int inconsistentCount = 0;
-        List<Problem> augmented = new ArrayList<Problem>();
+        List<PuzzleJSON> augmented = new ArrayList<>();
         int count = 0;
         int tooBigCount = 0;
-        for(Problem p:ps){
-            int initialSize = p.problemSize();
-            improve(p);
-            if (!p.isConsistent()) {
+        for(PuzzleJSON p:ps){
+            Problem converted = (Problem) p;
+            int initialSize = converted.problemSize();
+            improve(converted);
+            if (!converted.isConsistent()) {
                 inconsistentCount++;
-            } else if(p.problemSize() > 2*initialSize){
+            } else if(converted.problemSize() > 2*initialSize){
                tooBigCount ++;
             } else {
-                p.description = "4" + p.description;
-                augmented.add(p);
+                converted.description = "4" + converted.description;
+                augmented.add(converted);
             }
         }
-        System.out.println("inconsistent: " + inconsistentCount);
-        System.out.println("problems considered too large: " + tooBigCount);
-        System.out.println("problems generated: " + augmented.size());
         return augmented;
     }
 }

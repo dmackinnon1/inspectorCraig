@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * a tiger, or if the contents of the room cannot be determined based on
  * the statements.
  */
-public class Problem {
+public class Problem implements PuzzleJSON{
     Door door1, door2;
     Solver solver;
     String description;
@@ -96,7 +96,7 @@ public class Problem {
 
     }
 
-    public String toJson(){
+    public String toJSON(){
         String json = "{";
         json += "\"door1_clue\": \"" + this.door1.translation() +"\"";
         json += ", \"door2_clue\": \"" + this.door2.translation() +"\"";

@@ -16,8 +16,8 @@ public class Series7Generator extends BaseGenerator {
         super(propSize);
     }
 
-    public List<Problem> generateAll(){
-        List<Problem> problems = generate71();
+    public List<PuzzleJSON> generate(){
+        List<PuzzleJSON> problems = generate71();
         problems.addAll(generate71v2());
         problems.addAll(generate71v3());
         problems.addAll(generate72());
@@ -43,21 +43,21 @@ public class Series7Generator extends BaseGenerator {
         result: q
 
      */
-    public List<Problem> generate71() {
+    public List<PuzzleJSON> generate71() {
         String description = "710";
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         int counter = 1;
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(q);
                 remain2.remove(p);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
                     remain3.addAll(this.props);
                     remain3.remove(r);
                     Implication pq = new Implication(p, q);
@@ -85,21 +85,21 @@ public class Series7Generator extends BaseGenerator {
         result: q, -r
      */
 
-    public List<Problem> generate71v2() {
+    public List<PuzzleJSON> generate71v2() {
         String description = "711";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(q);
                 remain2.remove(p);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
                     remain3.addAll(this.props);
                     remain3.remove(r);
                     Implication pq = new Implication(p, q);
@@ -131,10 +131,10 @@ public class Series7Generator extends BaseGenerator {
      For more than 3, the result is that all assertions are unknown
      */
 
-    public List<Problem> generate71v3() {
+    public List<PuzzleJSON> generate71v3() {
         String description = "712";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
             List<Proposition> remain = new ArrayList<Proposition>();
             remain.addAll(this.props);
@@ -173,16 +173,16 @@ public class Series7Generator extends BaseGenerator {
         -q
         result: r, -q
      */
-    public List<Problem> generate72() {
+    public List<PuzzleJSON> generate72() {
         String description = "720";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
@@ -208,16 +208,16 @@ public class Series7Generator extends BaseGenerator {
       r -> -p
       results: -q, -p, r
    */
-    public List<Problem> generate72v2() {
+    public List<PuzzleJSON> generate72v2() {
         String description = "721";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
@@ -244,16 +244,16 @@ public class Series7Generator extends BaseGenerator {
      r -> p
      results: -q, p, r
   */
-    public List<Problem> generate72v3() {
+    public List<PuzzleJSON> generate72v3() {
         String description = "722";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
@@ -282,21 +282,21 @@ public class Series7Generator extends BaseGenerator {
     p -> -r
     result: q, -p, -r
      */
-    public List<Problem> generate73() {
+    public List<PuzzleJSON> generate73() {
         String description = "730";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
 
                     Implication piq = new Implication(p, q);
                     Implication riq = new Implication(r,q);
@@ -324,21 +324,21 @@ public class Series7Generator extends BaseGenerator {
    q -> -p
    result: q, -p
     */
-    public List<Problem> generate73v2() {
+    public List<PuzzleJSON> generate73v2() {
         String description = "731";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
 
                     Implication piq = new Implication(p, q);
                     Implication riq = new Implication(r,q);
@@ -365,21 +365,21 @@ public class Series7Generator extends BaseGenerator {
      q-> r
      result: q, -p, r
       */
-    public List<Problem> generate73v3() {
+    public List<PuzzleJSON> generate73v3() {
         String description = "732";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
 
                     Implication piq = new Implication(p, q);
                     Implication riq = new Implication(r,q);
@@ -407,22 +407,20 @@ public class Series7Generator extends BaseGenerator {
     q-> p
     result: q, p, -r
      */
-    public List<Problem> generate73v4() {
+    public List<PuzzleJSON> generate73v4() {
         String description = "733";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
-
                     Implication piq = new Implication(p, q);
                     Implication riq = new Implication(r,q);
                     Implication pinr = new Implication(p, r.negate());
@@ -449,21 +447,21 @@ public class Series7Generator extends BaseGenerator {
     result: q
      */
 
-    public List<Problem> generate74() {
+    public List<PuzzleJSON> generate74() {
         String description = "740";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
                     remain3.addAll(this.props);
                     remain3.remove(r);
 
@@ -494,21 +492,21 @@ public class Series7Generator extends BaseGenerator {
     result: q, p
      */
 
-    public List<Problem> generate74v2() {
+    public List<PuzzleJSON> generate74v2() {
         String description = "741";
         int counter = 0;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
                     remain3.addAll(this.props);
                     remain3.remove(r);
 
@@ -538,21 +536,21 @@ public class Series7Generator extends BaseGenerator {
    -p -> -r
 result: p, by contradiction
  */
-    public List<Problem> generate78() {
+    public List<PuzzleJSON> generate78() {
         String description = "780";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
                     remain3.addAll(this.props);
                     remain3.remove(r);
 
@@ -581,21 +579,21 @@ result: p, by contradiction
    p-> q
 result: p, by contradiction, q and r
  */
-    public List<Problem> generate78v2() {
+    public List<PuzzleJSON> generate78v2() {
         String description = "781";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
                     remain3.addAll(this.props);
                     remain3.remove(r);
 
@@ -625,21 +623,21 @@ p|q|r
 p-> -q
 result: p, by contradiction, -q
 */
-    public List<Problem> generate78v3() {
+    public List<PuzzleJSON> generate78v3() {
         String description = "782";
         int counter = 1;
-        List<Problem> problems = new ArrayList<Problem>();
+        List<PuzzleJSON> problems = new ArrayList<>();
         for (Proposition p : this.props) {
-            List<Proposition> remain = new ArrayList<Proposition>();
+            List<Proposition> remain = new ArrayList<>();
             remain.addAll(this.props);
             remain.remove(p);
             for (Proposition q : remain) {
-                List<Proposition> remain2 = new ArrayList<Proposition>();
+                List<Proposition> remain2 = new ArrayList<>();
                 remain2.addAll(this.props);
                 remain2.remove(p);
                 remain2.remove(q);
                 for (Proposition r : remain2) {
-                    List<Proposition> remain3 = new ArrayList<Proposition>();
+                    List<Proposition> remain3 = new ArrayList<>();
                     remain3.addAll(this.props);
                     remain3.remove(r);
 
