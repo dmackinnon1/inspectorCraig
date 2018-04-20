@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/craig-util.js"></script>
+<script src="js/craig-parse.js"></script>
+<script src="js/dreamers.js"></script>
+<script type="text/javascript" async	
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<title>Isle of Dreams</title>
+</head>
+<style>
+ul {
+    padding-left: 40px;
+    list-style-type: none;
+}
+li {
+    padding-bottom: 10px;
+}
+table, tr {
+    padding: 4px;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse; 
+    margin: auto;
+}
+th, td {
+    padding: 10px;
+}
+body {
+	background-color:lightgrey;
+}
+.buttonDiv {
+    display: inline-block;
+    padding: 2px;
+    border: 2px;
+}
+.centered {
+    text-align: center;
+}
+.prop-column {
+	font-size:large;
+}
+.main-column {
+	background-color:white;
+}
+</style>
+<script>
+let dreamerData = [];
+let puzzle = null;
+//load data
+$(document).ready(function(){
+	console.log("about to fetch remote data");
+	$.getJSON("data/dreamers.json", function(data){
+		dreamerData = data;
+		//uncomment the line below to test only puzzles that are inconsistent
+		//dreamerData = dreamerData.filter(p => p.is_consistent === "false");
+	}).done(function() {
+		initialize();
+		reset();
+	});
+});
+//initialize display
+$(document).ready(function(){
+	$("#resetButton").on("click", function(){
+		reset();
+	});
+	$("#solve").on("click", function(event){
+			if (display.disabled) return;
+			$("#reset").addClass("btn-success");
+			solvePuzzle();
+	});
+	
+	display.puzzleIntro = document.getElementById("puzzleIntro");
+	display.solutionDisplay  = document.getElementById("solutionDisplay");
+	display.puzzleDescription = document.getElementById("puzzleDescription");
+	display.answerDisplay = document.getElementById("answerDisplay");
+	display.puzzleTitle = document.getElementById("puzzleTitle");
+	//display.latexDisplay = document.getElementById("latexDisplay");
+});
+
+function initialize(){
+	dreamer.puzzles = dreamerData;	
+}
+
+function reset() {
+	puzzleReset();
+	MathJax.Hub.Typeset();
+};
+
+
+</script>
+
+<body>
+
+<nav class="navbar navbar-default" style="margin-bottom:0px">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="..">
+				<img src="imgs/github_badge1.png" style="max-width:100%;max-height:100%" >
+			</a>
+			<p class="navbar-text navbar-right">
+				<a href=".." class="navbar-link">dmackinnon1.github.io</a>
+			</p>
+		</div>
+		</div>
+</nav>
+
+<div class="container-fluid">
+	<div class='row'>
+	<div class='col-sm-1 col-lg-3'></div>
+	<div class='col-sm-10 col-lg-6 main-column'>
+	<div class="page-header">
+		<h1>The Isle of Dreams</h1>
+	</div> 		
+	<p class='puzzle-text'>
+	Some logic puzzles about the Isle of Dreams, based on those found in "The Lady or the Tiger?" by Raymond Smullyan.
+	</p>
+	<button type='button' 
+	class='btn btn-info' data-toggle='collapse' data-target='#mainText'>
+		About </button>
+	<div id='mainText' class='collapse'>
+	<p class='puzzle-text'>
+	<br>
+	Raymond Smullyan's book of puzzles "The Lady or The Tiger?" included a set of puzzles
+	set on the Isle of Dreams. As he says:
+	<blockquote> 
+    I once dreamed there was a certain island called the Isle of Dreams. The inhabitants
+    of this island dream quite vividly; indeed, their thoughts while asleep are as vivid as while
+    awake. Moreover, their dreamlife has the same continuity from night to night as their waking life has from day to day. As a result, some of the inhabitants sometimes have difficulty
+    in knowing whether they are awake or asleep at a given time.
+    </blockquote> 
+
+    </div>
+	<hr>
+	<h2 id="puzzleTitle"></h2>
+	<div id="puzzleIntro" class='puzzle-text'></div>	
+	<div id="puzzleDescription" class='puzzle-text'></div>	
+	
+	<hr>
+	<div id="answerDisplay"></div>
+	<br>
+	<!--
+	<button type='button' 
+	class='btn btn-info' data-toggle='collapse' data-target='#latexDisplayHolder'>
+		Show Propositions </button>
+	<div id='latexDisplayHolder' class='collapse'>
+		<br>
+		<p><em>The inscriptions on the doors can be translated into logical formulae - if you are familiar with the notation, this might help you find out what is behind the doors.
+		Here "Xd" means that islander X is diurnal, and "Xa" means that door islander X is awake. 
+		If an islander is not diurnal, they are nocturnal, and if they are not awake, they are asleep.
+		</em></p>
+		<div id='latexDisplay'></div>
+	</div>
+	<br>
+	-->
+	<br>
+	<div id="soveButton">
+		<button type="button" id="solve" class="btn btn-primary typeButton">Solve</span></button>
+	</div>
+	<br>
+	<div id="solutionDisplay" class="puzzle-text"></div>	
+	<hr>
+	<div id="resetButtonHolder">
+		<button type="button" id="resetButton", class="btn btn-primary typeButton">New Puzzle</span></button>
+	</div>
+	<br>
+	<br>
+</div>
+	<div class='col-sm-1 col-lg-3'></div>
+</div>
+
+</div>
+</body>
+</html>

@@ -143,6 +143,7 @@ public class Problem implements PuzzleJSON{
         json += ", \"islanderB_statement2\": \"" + dreamerBphrase2() +"\"";
         json += ", \"solution_text\": \"" + this.solutionText() +"\"";
         json += ", \"all_phrases\": " + this.allPhrases();
+        json += ", \"solution\": " + this.solution;
         json += "}";
         return json;
     }
