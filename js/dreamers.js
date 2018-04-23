@@ -146,13 +146,13 @@ class PuzzleController {
 	answerDisplay() {
 		let s = "<div> <table>";
 		s += "<tr><th>Islander</th><th>diurnal</th><th>nocturnal</th><th>unknown</th></tr>"
-		s += new TypeController("Islander A", "A").display();
-		s += new TypeController("Islander B", "B").display();		
+		s += new TypeController("A", "A").display();
+		s += new TypeController("B", "B").display();		
 		s += "</table></div>";
 		s += "<div> <table><br>";		
 		s += "<tr><th>Islander</th><th>awake</th><th>asleep</th><th>unknown</th></tr>"
-		s += new StateController("Islander A", "A").display();
-		s += new StateController("Islander B", "B").display();		
+		s += new StateController("A", "A").display();
+		s += new StateController("B", "B").display();		
 		s += "</table></div>";
 		s += "<br>" + new ImpossibleController().display();
 		return s;
@@ -260,7 +260,7 @@ class TypeController {
 		btn +=  "<td><button type='button' id='nocturnal_"+ this.code + "' class='btn btn-secondary', onclick='selectNocturnal(event)'>";
 		btn += "<span class='glypicon " + txt + " lrg-font'></span>"
 		btn += "</button></td>";
-		btn +=  "<td><button type='button' id='type_unknown_"+ this.code + "' class='btn btn-secondary', onclick='selectTypeUnknown(event)'>";
+		btn +=  "<td><button type='button' id='typeUnknown_"+ this.code + "' class='btn btn-secondary', onclick='selectTypeUnknown(event)'>";
 		btn += "<span class='glypicon " + txt + " lrg-font'></span>"
 		btn += "</button></td>";
 		btn += "</tr>";
@@ -283,7 +283,7 @@ class StateController {
 		btn +=  "<td><button type='button' id='asleep_"+ this.code + "' class='btn btn-secondary', onclick='selectAsleep(event)'>";
 		btn += "<span class='glypicon " + txt + " lrg-font'></span>"
 		btn += "</button></td>";
-		btn +=  "<td><button type='button' id='state_unknown_"+ this.code + "' class='btn btn-secondary', onclick='selectStateUnknown(event)'>";
+		btn +=  "<td><button type='button' id='stateUnknown_"+ this.code + "' class='btn btn-secondary', onclick='selectStateUnknown(event)'>";
 		btn += "<span class='glypicon " + txt + " lrg-font'></span>"
 		btn += "</button></td>";
 		btn += "</tr>";
@@ -310,7 +310,8 @@ function printLists() {
 	console.log("nocturnals: " +  dreamer.selected.nocturnalList);
 	console.log("awake: " + dreamer.selected.awakeList);
 	console.log("asleep: " +  dreamer.selected.asleepList);
-		
+	console.log("unknownType: " +  dreamer.selected.unknownTypeList);
+	console.log("unknownState: " +  dreamer.selected.unknownStateList);	
 }
 
 function selectDiurnal(event) {
@@ -319,7 +320,10 @@ function selectDiurnal(event) {
 	let islander = id.substring(id.indexOf('_')+1, id.length);	
  	dreamer.selected.diurnalList = addOrRemove(dreamer.selected.diurnalList, islander);
  	dreamer.selected.nocturnalList = removeElement(dreamer.selected.nocturnalList, islander);
- 	dreamer.selected.unknownTypeList = removeElement(dreamer.selected.unknownTypeList, islander); 	
+ 	dreamer.selected.unknownTypeList = removeElement(dreamer.selected.unknownTypeList, islander); 
+ 	if (!dreamer.selected.diurnalList.includes(islander)){
+ 		dreamer.selected.unknownTypeList.push(islander);
+ 	}	
 	updateDreamerButtons(islander);
 };
 
@@ -330,6 +334,9 @@ function selectNocturnal(event) {
  	dreamer.selected.nocturnalList = addOrRemove(dreamer.selected.nocturnalList, islander);
  	dreamer.selected.diurnalList = removeElement(dreamer.selected.diurnalList, islander);
  	dreamer.selected.unknownTypeList = removeElement(dreamer.selected.unknownTypeList, islander); 	
+	if (!dreamer.selected.nocturnalList.includes(islander)){
+ 		dreamer.selected.unknownTypeList.push(islander);
+ 	}
 	updateDreamerButtons(islander);
 };
 
@@ -349,7 +356,10 @@ function selectAwake(event) {
 	let islander = id.substring(id.indexOf('_')+1, id.length);	
  	dreamer.selected.awakeList = addOrRemove(dreamer.selected.awakeList, islander);
  	dreamer.selected.asleepList = removeElement(dreamer.selected.asleepList, islander);
- 	dreamer.selected.unknownStateList = removeElement(dreamer.selected.unknownStateList, islander); 	
+ 	dreamer.selected.unknownStateList = removeElement(dreamer.selected.unknownStateList, islander); 
+ 	if (!dreamer.selected.awakeList.includes(islander)){
+ 		dreamer.selected.unknownStateList.push(islander);
+ 	}	
 	updateDreamerButtons(islander);
 };
 
@@ -360,6 +370,9 @@ function selectAsleep(event) {
  	dreamer.selected.awakeList = removeElement(dreamer.selected.awakeList, islander);
  	dreamer.selected.asleepList = addOrRemove(dreamer.selected.asleepList, islander);
  	dreamer.selected.unknownStateList = removeElement(dreamer.selected.unknownStateList, islander); 	
+	if (!dreamer.selected.asleepList.includes(islander)){
+ 		dreamer.selected.unknownStateList.push(islander);
+ 	}
 	updateDreamerButtons(islander);
 };
 
@@ -388,12 +401,11 @@ function updateAllDreamerButtons(){
 function updateDreamerButtons(islander){
 	updateDreamerButton("#awake_", dreamer.selected.awakeList, islander);
 	updateDreamerButton("#asleep_", dreamer.selected.asleepList, islander);
-	updateDreamerButton("#state_unknown_", dreamer.selected.unknownStateList, islander);
+	updateDreamerButton("#stateUnknown_", dreamer.selected.unknownStateList, islander);
 	updateDreamerButton("#diurnal_", dreamer.selected.diurnalList, islander);
 	updateDreamerButton("#nocturnal_", dreamer.selected.nocturnalList, islander);
-	updateDreamerButton("#type_unknown_", dreamer.selected.unknownTypeList, islander);
+	updateDreamerButton("#typeUnknown_", dreamer.selected.unknownTypeList, islander);
 	updateDreamerButton("#impossible_", dreamer.selected.impossibleList, islander);
-
 }
 
 function updateDreamerButton(prefix, list, islander){
