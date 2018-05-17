@@ -36,11 +36,50 @@ public class DreamersGenerator implements Generator{
         return problems;
     }
 
+    public List<String> descriptors(){
+        List<String> statements = new ArrayList<String>();
+        List<String> descriptors = new ArrayList<String>();
+        List<PuzzleJSON> problems = generate();
+        int count = 0;
+        descriptors.add(Descriptor.headerRow());
+        for (PuzzleJSON pj : problems){
+            Problem p = (Problem) pj;
+            String aPhrase = p.dreamerAGenericPhrase();
+            String bPhrase = p.dreamerBGenericPhrase();
+            if (!statements.contains(aPhrase)) statements.add(aPhrase);
+            if (!statements.contains(bPhrase)) statements.add(bPhrase);
+            int solvable = 0;
+            if (!p.isConsistent()) {
+                solvable = -1;
+            } else if (p.isPartial()){
+                solvable = 1;
+            } else if (p.isFull()){
+                solvable = 2;
+            }
+            Descriptor d = new Descriptor(count, statements.indexOf(aPhrase), statements.indexOf(bPhrase), solvable);
+            descriptors.add(d.toString());
+            count ++;
+        }
+        System.out.println("statements");
+        int scount = 0;
+        for (String s: statements){
+            System.out.println("" + scount+ ": " + s);
+            scount++;
+        }
+        System.out.println("------------------------");
+
+        return descriptors;
+    }
+
     public static void main(String[] args){
         DreamersGenerator g = new DreamersGenerator();
-        List<PuzzleJSON> probs = g.generate();
-        for(PuzzleJSON p: probs){
-            System.out.println(p.toJSON());
+
+        List<String> descriptors = g.descriptors();
+        System.out.println("----------------------------");
+        for(String d: descriptors){
+            System.out.println(d);
         }
-    }
+        }
+
+
 }

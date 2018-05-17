@@ -1,0 +1,61 @@
+---
+title: "Isle of Dreams"
+author: "Dan MacKinnon"
+date: "May 12, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We are building puzzles where two islanders each have two distinct thoughts, at the same moment. The two distinct thoughts that an islander might have are among the 16 combinations listed below.
+
+1: I am awake. The other is awake.
+
+2: I am awake. The other is asleep.
+
+3: I am awake. The other is diurnal.
+
+4: I am awake. The other is nocturnal.
+
+5: I am asleep. The other is awake.
+
+6: I am asleep. The other is asleep.
+
+7: I am asleep. The other is diurnal.
+
+8: I am asleep. The other is nocturnal.
+
+9: I am diurnal. The other is awake.
+
+10: I am diurnal. The other is asleep.
+
+11: I am diurnal. The other is diurnal.
+
+12: I am diurnal. The other is nocturnal.
+
+13: I am nocturnal. The other is awake.
+
+14: I am nocturnal. The other is asleep.
+
+15: I am nocturnal. The other is diurnal.
+
+16: I am nocturnal. The other is nocturnal.
+
+If islander A and islander B each have one of these combinations of thoughts, then there are 256 possiblilities. The data set Dreamers includes all of these possibilities. The data set also includes information about whether a puzzle based on each combination is completely solvable (you can determine the state and type of both islander), partially solvable (you can find the state or type of each islander, but not both), or unsolvable - the statements contradict each other and the islanders could not have been thinking such thoughts.
+
+```{r}
+Dreamers <- read.csv('dreamer_report.csv',stringsAsFactors=FALSE)
+str(Dreamers)
+```
+
+
+```{r}
+HasSol  <- matrix(rep(0, 256), nrow=16, ncol=16)
+for (j in 1:256){
+  HasSol[(Dreamers[j,]$islanderA + 1),(Dreamers[j,]$islanderB + 1)] <- Dreamers[j,]$solvability
+}
+#str(HasSol)
+image(x= 1:16, y = 1:16, HasSol, col=grey.colors(4, start=0, end=1), main='first try')
+```

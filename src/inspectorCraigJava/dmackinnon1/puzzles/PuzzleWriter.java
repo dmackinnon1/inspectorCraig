@@ -24,6 +24,7 @@ public class PuzzleWriter {
     public static String FILENAME_TIGER_INSCRIPTIONS = "report/inscriptions.csv";
     public static String FILENAME_TIGER_REPORT = "report/tiger_report.csv";
     public static String FILENAME_DREAMER_PUZZLES = "data/dreamers.json";
+    public static String FILENAME_DREAMER_REPORT = "report/dreamer_report.csv";
 
     public static void main(String[] input) throws Exception {
         if (input.length > 0 && input[0].trim().equals("test")) {
@@ -39,6 +40,12 @@ public class PuzzleWriter {
             System.out.println("writing out tiger/treasure report data...");
             file = Paths.get(System.getProperty("user.dir"), FILENAME_TIGER_REPORT);
             Files.write(file, tigerReportData(), Charset.forName("UTF-8"));
+
+            System.out.println("writing out dreamers report data...");
+            file = Paths.get(System.getProperty("user.dir"), FILENAME_DREAMER_REPORT);
+            Files.write(file, dreamerReportData(), Charset.forName("UTF-8"));
+
+
         }else {
             writePuzzleProblems("generating Inspector Craig 3 Suspect puzzles...",
                     FILENAME_3_PUZZLES, new Craig3SuspectGenerator());
@@ -68,6 +75,10 @@ public class PuzzleWriter {
 
     public static List<String> tigerReportData(){
         return new TigerGenerator().descriptors();
+    }
+
+    public static List<String> dreamerReportData(){
+        return new DreamersGenerator().descriptors();
     }
 
     public static List<String> jsonArrayAsList(List<PuzzleJSON> puzzleJSONs){

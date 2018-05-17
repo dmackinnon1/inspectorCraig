@@ -27,7 +27,7 @@ public abstract class BaseGenerator implements Generator {
         }
     }
 
-    public abstract List<PuzzleJSON> generate();
+    //public abstract List<PuzzleJSON> generate();
 
     protected Union totalUnion(){
         return new Union(this.props.toArray(new Proposition[this.props.size()]));

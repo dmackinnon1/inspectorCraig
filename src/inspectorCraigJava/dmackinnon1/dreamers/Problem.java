@@ -7,6 +7,7 @@ public class Problem implements PuzzleJSON{
 
     Dreamer dreamerA;
     Dreamer dreamerB;
+    Dreamer other = new Dreamer("The other");
 
     boolean isConsistent = true;
 
@@ -90,6 +91,14 @@ public class Problem implements PuzzleJSON{
         return phrase2((Proposition) dreamerBPhrases.get(1), dreamerA);
     }
 
+    public String dreamerAGenericPhrase(){
+       return dreamerAphrase1() + " " + phrase2((Proposition) dreamerAPhrases.get(1), other);
+    }
+
+    public String dreamerBGenericPhrase(){
+        return dreamerBphrase1() + " " + phrase2((Proposition) dreamerBPhrases.get(1), other);
+    }
+
     public Problem solve(){
         List<Proposition> solverProps = new ArrayList<Proposition>();
         solverProps.add(dreamerA.isAwake());
@@ -116,6 +125,14 @@ public class Problem implements PuzzleJSON{
 
     public boolean isConsistent(){
         return isConsistent;
+    }
+
+    public boolean isPartial() {
+        return isConsistent() && solution.size() == 2;
+    }
+
+    public boolean isFull(){
+        return isConsistent() && solution.size() == 4;
     }
 
     public List<Phrase> solution(){
