@@ -440,5 +440,5 @@ function updateDreamerButton(prefix, list, islander){
 		$(prefix + islander).addClass("btn-secondary");
 		$(prefix + islander).html("<span class='glypicon glyphicon glyphicon-unchecked lrg-font'></span>");	
 	}
-	printLists();
+	//printLists();
 }

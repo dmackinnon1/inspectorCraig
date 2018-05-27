@@ -1,4 +1,4 @@
-'user strict'
+'use strict'
 // The tiger object tracks the status of the selected puzzle
 let tiger = {}; tiger.puzzles = []; tiger.activeSet = []; tiger.selected = null; //the puzzle selected for the user tiger.answered = false; tiger.version = 1;
 // UI must initialize display elements
@@ -317,5 +317,5 @@ function updateDoorButtons(door){
 		$("#unknown_" + door).addClass("btn-secondary");							
 		$("#unknown_" + door).html("<span class='glypicon glyphicon glyphicon-unchecked lrg-font'></span>");	
 	}
-	printLists();
+	//printLists();
 }
