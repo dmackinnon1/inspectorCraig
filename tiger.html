@@ -60,7 +60,7 @@ $(document).ready(function(){
 		tigerData = data;
 	}).done(function() {
 		initialize();
-		reset();
+		set();
 	});
 });
 //initialize display
@@ -84,6 +84,11 @@ $(document).ready(function(){
 
 function initialize(){
 	tiger.puzzles = tigerData;	
+}
+
+function set(){
+	puzzleReset(window.location.href);
+	MathJax.Hub.Typeset();
 }
 
 function reset() {

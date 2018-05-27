@@ -50,6 +50,20 @@ Dreamers <- read.csv('dreamer_report.csv',stringsAsFactors=FALSE)
 str(Dreamers)
 ```
 
+```{r}
+unsolvable <- sum(Dreamers$solvability==-1)
+print(unsolvable)
+```
+
+```{r}
+partial <- sum(Dreamers$solvability==1)
+print(partial)
+```
+```{r}
+complete <- sum(Dreamers$solvability==2)
+print(complete)
+```
+
 
 ```{r}
 HasSol  <- matrix(rep(0, 256), nrow=16, ncol=16)

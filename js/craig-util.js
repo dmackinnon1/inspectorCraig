@@ -1,7 +1,24 @@
+'use strict'
+
+// url parsing - simplified (no encoded paramss)
+function getQueryParameter(url, key){
+    let regex = new RegExp("[?&]" + key + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url); //an array with 3 elements, last is param value
+    if (results == null){
+    	return null;
+    } else {
+    	if (results.length < 3) {
+    		return null;
+    	}
+    	return results[2];	
+    }
+}
+
+
 //utilities
 function arrayWithoutElement(array, e) {
-	var x;
-	var remainder = [];
+	let x;
+	let remainder = [];
 	for (x in array) {
 		if (array[x] !== e) {
 			remainder.push(array[x]);
@@ -11,7 +28,7 @@ function arrayWithoutElement(array, e) {
 }
 
 function arrayContains(array, e) {
-	var x;
+	let x;
 	for (x in array) {
 		if (array[x] === e) {
 			return true;
@@ -21,9 +38,9 @@ function arrayContains(array, e) {
 };
 
 function arrayContainsArray(array1, array2) {
-	var x;
+	let x;
 	for (x in array2) {
-		var a = arrayContains(array1, array2[x]);
+		let a = arrayContains(array1, array2[x]);
 		if (a!==true) { return false };
 	}
 	return true;
@@ -39,8 +56,8 @@ function addOrRemove(array, e) {
 };
 
 function removeElement(array, e) {
-	var newArray = [];
-	var x;
+	let newArray = [];
+	let x;
 	for (x in array) {
 		if (e !== array[x]) {
 			newArray.push(array[x]);
@@ -65,17 +82,17 @@ function randomInt(lessThan){
 *
 */
 function randomRange(greaterThan, lessThan){
-	var shifted = randomInt(lessThan - greaterThan + 1);
+	let shifted = randomInt(lessThan - greaterThan + 1);
 	return lessThan - shifted; 
 };
 
 function randomElement(array) {
-	var res =randomRange(0, array.length-1);
+	let res =randomRange(0, array.length-1);
 	return array[res];
 };
 
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  let currentIndex = array.length, temporaryValue, randomIndex;
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
     // Pick a remaining element...
@@ -90,8 +107,8 @@ function shuffle(array) {
 };
 
 function prettyPrintList(list) {
-	var s = "";
-	var i;
+	let s = "";
+	let i;
 	for (i in list) {
 		if (i != 0 && list.length != 2) {
 			s +=",";

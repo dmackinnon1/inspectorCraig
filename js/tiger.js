@@ -34,11 +34,22 @@ function solvePuzzle(){
 	solD.innerHTML = tiger.selected.solutionDisplay();
 } 
 
-function puzzleReset() {
+function puzzleReset(url = null) {
+	let id = null;
+	if (url != null){
+		id = getQueryParameter(url, 'id');
+	}
 	if  (tiger.activeSet.length == 0) {
 	 tiger.activeSet = tiger.puzzles;
 	}
-	let p = randomElement(tiger.activeSet);
+	let p = null;
+	if (id != null) {
+		p = getPuzzleWithId(id);
+ 	}
+ 	if (p == null){
+ 		p = randomElement(tiger.activeSet);	
+ 	}
+
  	tiger.selected = new PuzzleController(p);
  	tiger.activeSet = removeElement(tiger.activeSet,p);
 	formatPuzzle(tiger.selected);	
@@ -47,6 +58,16 @@ function puzzleReset() {
 	updateAllDoorButtons();
 }
 
+function getPuzzleWithId(id) {
+	for (x in tiger.activeSet){
+		let p = tiger.activeSet[x];
+		 if (p.description == "Puzzle " + id){
+		 	return p;
+		 }
+	}
+	console.log('No puzzle with provided id was found in active set: ' + id);
+	return null;
+}	
 
 /*
 A puzzle has json format like the following:
@@ -108,11 +129,9 @@ class PuzzleController {
 	}
 
 	cluesDisplay() {
-		let c = "<ul><br>";
-		
+		let c = "<ul><br>";		
 		c += "<li>Door 1 says: " + completeSentence(this.puzzle.door1_clue) + "</li>";			
 		c += "<li>Door 2 says: " + completeSentence(this.puzzle.door2_clue) + "</li>";			
-	
 		c+="<ul>";
 		return c;
 	}

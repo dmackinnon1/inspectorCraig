@@ -143,13 +143,21 @@ $(document).ready(function () {
 <p>16: I am nocturnal. The other is nocturnal.</p>
 <p>If islander A and islander B each have one of these combinations of thoughts, then there are 256 possiblilities. The data set Dreamers includes all of these possibilities. The data set also includes information about whether a puzzle based on each combination is completely solvable (you can determine the state and type of both islander), partially solvable (you can find the state or type of each islander, but not both), or unsolvable - the statements contradict each other and the islanders could not have been thinking such thoughts.</p>
 <pre class="r"><code>Dreamers &lt;- read.csv('dreamer_report.csv',stringsAsFactors=FALSE)
-print(str(Dreamers))</code></pre>
+str(Dreamers)</code></pre>
 <pre><code>## 'data.frame':    256 obs. of  4 variables:
 ##  $ puzzle     : int  0 1 2 3 4 5 6 7 8 9 ...
 ##  $ islanderA  : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ islanderB  : int  0 1 2 3 4 5 6 7 8 9 ...
-##  $ solvability: int  1 -1 2 2 -1 1 2 2 2 2 ...
-## NULL</code></pre>
+##  $ solvability: int  1 -1 2 2 -1 1 2 2 2 2 ...</code></pre>
+<pre class="r"><code>unsolvable &lt;- sum(Dreamers$solvability==-1)
+print(unsolvable)</code></pre>
+<pre><code>## [1] 32</code></pre>
+<pre class="r"><code>partial &lt;- sum(Dreamers$solvability==1)
+print(partial)</code></pre>
+<pre><code>## [1] 32</code></pre>
+<pre class="r"><code>complete &lt;- sum(Dreamers$solvability==2)
+print(complete)</code></pre>
+<pre><code>## [1] 192</code></pre>
 <pre class="r"><code>HasSol  &lt;- matrix(rep(0, 256), nrow=16, ncol=16)
 for (j in 1:256){
   HasSol[(Dreamers[j,]$islanderA + 1),(Dreamers[j,]$islanderB + 1)] &lt;- Dreamers[j,]$solvability
