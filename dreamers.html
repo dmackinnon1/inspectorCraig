@@ -32,9 +32,6 @@ table, tr {
 th, td {
     padding: 10px;
 }
-body {
-	background-color:lightgrey;
-}
 .buttonDiv {
     display: inline-block;
     padding: 2px;
@@ -62,7 +59,7 @@ $(document).ready(function(){
 		//dreamerData = dreamerData.filter(p => p.is_consistent === "false");
 	}).done(function() {
 		initialize();
-		reset();
+		set();
 	});
 });
 //initialize display
@@ -90,7 +87,10 @@ function initialize(){
 
 function reset() {
 	puzzleReset();
-	MathJax.Hub.Typeset();
+};
+
+function set() {
+	puzzleReset(window.location.href);
 };
 
 

@@ -40,12 +40,22 @@ function solvePuzzle(){
 	solD.innerHTML = dreamer.selected.solutionDisplay();
 } 
 
-function puzzleReset() {
+function puzzleReset(url = null) {	
+	let id = null;
+	if (url != null){
+		id = getQueryParameter(url, 'id');
+	}
 	if  (dreamer.activeSet.length == 0) {
 	 dreamer.activeSet = dreamer.puzzles;
 	}
-	let p = randomElement(dreamer.activeSet);
- 	dreamer.selected = new PuzzleController(p);
+	let p = null;
+	if (id != null) {
+		p = getPuzzleWithId(id);
+ 	}
+ 	if (p == null) {
+		p = randomElement(dreamer.activeSet);	
+ 	}
+	dreamer.selected = new PuzzleController(p);
  	dreamer.activeSet = removeElement(dreamer.activeSet,p);
 	formatPuzzle(dreamer.selected);	
  	dreamer.answered = false;
@@ -53,6 +63,17 @@ function puzzleReset() {
 	updateAllDreamerButtons();
 }
 
+function getPuzzleWithId(id) {
+	let x = null;
+	for (x in dreamer.activeSet){
+		let p = dreamer.activeSet[x];
+		 if (p.description == "Problem " + id){
+		 	return p;
+		 }
+	}
+	console.log('No puzzle with provided id was found in active set: ' + id);
+	return null;
+}
 
 /*
 A puzzle has json format like the following:

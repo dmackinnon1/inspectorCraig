@@ -1,4 +1,4 @@
-
+'user strict'
 // The tiger object tracks the status of the selected puzzle
 let tiger = {}; tiger.puzzles = []; tiger.activeSet = []; tiger.selected = null; //the puzzle selected for the user tiger.answered = false; tiger.version = 1;
 // UI must initialize display elements
@@ -59,13 +59,14 @@ function puzzleReset(url = null) {
 }
 
 function getPuzzleWithId(id) {
+	let x = null;
 	for (x in tiger.activeSet){
 		let p = tiger.activeSet[x];
 		 if (p.description == "Puzzle " + id){
 		 	return p;
 		 }
 	}
-	console.log('No puzzle with provided id was found in active set: ' + id);
+	console.log('No puzzle with provided id was found in active set: '+ id)
 	return null;
 }	
 
