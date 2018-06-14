@@ -120,8 +120,10 @@ class PuzzleController {
 	}
 
 	puzzleIntro() {
-		let intro = "If Door 1 leads to treasure, its inscriptions are true, otherwise they are false."
-		intro += " If Door 2 leads to a tiger, its inscriptions are true, otherwise they are false. ";
+		let intro = "<p>Each door will lead to one thing: either a tiger or treasure. The two doors may both";
+		intro += " lead to a tiger, both may lead to treasure, or one may lead to a tiger and the other treasure.</p>";
+		intro += "<p>If Door 1 leads to treasure, its inscriptions are true, otherwise they are false.";
+		intro += " If Door 2 leads to a tiger, its inscriptions are true, otherwise they are false.</p>";
 		return intro;
 
 	}

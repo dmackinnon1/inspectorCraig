@@ -1,5 +1,4 @@
 'use strict'
-
 // url parsing - simplified (no encoded paramss)
 function getQueryParameter(url, key){
     let regex = new RegExp("[?&]" + key + "(=([^&#]*)|&|#|$)"),
